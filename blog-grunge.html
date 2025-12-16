@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RIOT — Underground Zine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --dirty-white: #e8e4dc;
+            --red: #c41e3a;
+            --yellow: #d4a017;
+            --gray: #4a4a4a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Special Elite', cursive;
+            background: var(--dirty-white);
+            color: var(--black);
+            line-height: 1.8;
+        }
+
+        /* Paper texture */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Torn edge effect */
+        .torn-edge {
+            position: relative;
+        }
+
+        .torn-edge::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: linear-gradient(135deg, var(--dirty-white) 25%, transparent 25%),
+                        linear-gradient(225deg, var(--dirty-white) 25%, transparent 25%);
+            background-size: 20px 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 2rem 0;
+            border-bottom: 3px solid var(--black);
+            position: relative;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 3rem;
+            color: var(--red);
+            transform: rotate(-5deg);
+            text-shadow: 3px 3px 0 var(--black);
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            font-size: 0.9rem;
+            color: var(--black);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            position: relative;
+        }
+
+        nav a::before {
+            content: '×';
+            margin-right: 0.25rem;
+            color: var(--red);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 4rem 0;
+            border-bottom: 3px solid var(--black);
+        }
+
+        .hero-wrapper {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+        }
+
+        .hero-main {
+            padding: 2rem;
+            background: var(--black);
+            color: var(--dirty-white);
+            transform: rotate(-1deg);
+            position: relative;
+        }
+
+        .hero-main::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px dashed var(--black);
+            z-index: -1;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            font-family: 'Permanent Marker', cursive;
+            font-size: 0.9rem;
+            color: var(--black);
+            background: var(--yellow);
+            padding: 0.25rem 0.75rem;
+            transform: rotate(3deg);
+            margin-bottom: 1rem;
+        }
+
+        .hero-title {
+            font-family: 'Permanent Marker', cursive;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .hero-excerpt {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-btn {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1.25rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--red);
+            border: 3px solid var(--dirty-white);
+            color: var(--dirty-white);
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+        }
+
+        .hero-btn:hover {
+            background: var(--yellow);
+            color: var(--black);
+            transform: rotate(2deg);
+        }
+
+        .hero-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .sticker {
+            padding: 1.5rem;
+            text-align: center;
+            transform: rotate(var(--rotate, 3deg));
+        }
+
+        .sticker:nth-child(1) {
+            background: var(--red);
+            color: var(--dirty-white);
+            --rotate: -5deg;
+        }
+
+        .sticker:nth-child(2) {
+            background: var(--yellow);
+            color: var(--black);
+            --rotate: 4deg;
+        }
+
+        .sticker:nth-child(3) {
+            background: var(--black);
+            color: var(--dirty-white);
+            --rotate: -3deg;
+        }
+
+        .sticker-text {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1.25rem;
+            text-transform: uppercase;
+        }
+
+        /* Featured */
+        .featured {
+            padding: 4rem 0;
+            border-bottom: 3px solid var(--black);
+        }
+
+        .section-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px dashed var(--black);
+        }
+
+        .section-title {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 2rem;
+            display: inline-block;
+            background: var(--black);
+            color: var(--dirty-white);
+            padding: 0.25rem 1rem;
+            transform: rotate(-2deg);
+        }
+
+        .featured-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+            border: 3px solid var(--black);
+            background: repeating-linear-gradient(
+                45deg,
+                var(--dirty-white),
+                var(--dirty-white) 10px,
+                #d8d4cc 10px,
+                #d8d4cc 20px
+            );
+        }
+
+        .featured-image {
+            background: var(--black);
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-image::before {
+            content: 'NO PHOTO';
+            font-family: 'Permanent Marker', cursive;
+            font-size: 2rem;
+            color: var(--gray);
+            transform: rotate(-10deg);
+        }
+
+        .featured-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+
+        .featured-content {
+            padding: 1rem;
+        }
+
+        .featured-category {
+            display: inline-block;
+            font-family: 'Permanent Marker', cursive;
+            font-size: 0.85rem;
+            background: var(--red);
+            color: var(--dirty-white);
+            padding: 0.25rem 0.5rem;
+            margin-bottom: 1rem;
+            transform: rotate(-2deg);
+        }
+
+        .featured-title {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1.75rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .featured-excerpt {
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .read-more {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1rem;
+            color: var(--red);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Articles */
+        .articles {
+            padding: 4rem 0;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .article-card {
+            border: 2px solid var(--black);
+            background: var(--dirty-white);
+            padding: 1.5rem;
+            transform: rotate(var(--rotate, 0deg));
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+
+        .article-card:nth-child(1) { --rotate: -2deg; }
+        .article-card:nth-child(2) { --rotate: 1deg; }
+        .article-card:nth-child(3) { --rotate: -1deg; }
+        .article-card:nth-child(4) { --rotate: 2deg; }
+        .article-card:nth-child(5) { --rotate: -1deg; }
+        .article-card:nth-child(6) { --rotate: 1deg; }
+
+        .article-card:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        .article-number {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 3rem;
+            color: var(--red);
+            opacity: 0.3;
+            line-height: 1;
+        }
+
+        .article-category {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .article-title {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-date {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        /* Newsletter */
+        .newsletter {
+            padding: 4rem 0;
+            background: var(--black);
+            color: var(--dirty-white);
+            position: relative;
+        }
+
+        .newsletter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: linear-gradient(-135deg, var(--dirty-white) 25%, transparent 25%),
+                        linear-gradient(-45deg, var(--dirty-white) 25%, transparent 25%);
+            background-size: 20px 20px;
+        }
+
+        .newsletter-inner {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .newsletter-title {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            transform: rotate(-2deg);
+        }
+
+        .newsletter-text {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0;
+            border: 3px solid var(--dirty-white);
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem;
+            font-family: 'Special Elite', cursive;
+            font-size: 1rem;
+            background: var(--dirty-white);
+            border: none;
+            color: var(--black);
+            outline: none;
+        }
+
+        .newsletter-btn {
+            padding: 1rem 2rem;
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1rem;
+            background: var(--red);
+            border: none;
+            color: var(--dirty-white);
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .newsletter-btn:hover {
+            background: var(--yellow);
+            color: var(--black);
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 0;
+            border-top: 3px solid var(--black);
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1.5rem;
+            color: var(--red);
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            font-size: 0.85rem;
+            color: var(--black);
+            text-decoration: none;
+        }
+
+        .footer-copy {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .hero-sidebar {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            .sticker {
+                flex: 1;
+                min-width: 150px;
+            }
+            .featured-card {
+                grid-template-columns: 1fr;
+            }
+            .articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav { display: none; }
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-inner">
+                <div class="logo">RIOT!</div>
+                <nav>
+                    <a href="#">Home</a>
+                    <a href="#">Zines</a>
+                    <a href="#">Music</a>
+                    <a href="#">DIY</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-wrapper">
+                <div class="hero-main">
+                    <span class="hero-tag">★ ISSUE #47 ★</span>
+                    <h1 class="hero-title">規則なんかクソくらえ</h1>
+                    <p class="hero-excerpt">
+                        メインストリームに中指を立てろ。<br>
+                        DIY精神で綴る、アンダーグラウンドカルチャーマガジン。
+                    </p>
+                    <button class="hero-btn">READ NOW →</button>
+                </div>
+                <div class="hero-sidebar">
+                    <div class="sticker">
+                        <p class="sticker-text">NO RULES</p>
+                    </div>
+                    <div class="sticker">
+                        <p class="sticker-text">DIY OR DIE</p>
+                    </div>
+                    <div class="sticker">
+                        <p class="sticker-text">PUNK'S NOT DEAD</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">FEATURED</h2>
+            </div>
+            <article class="featured-card">
+                <div class="featured-image"></div>
+                <div class="featured-content">
+                    <span class="featured-category">INTERVIEW</span>
+                    <h3 class="featured-title">ZINEカルチャーは死なない</h3>
+                    <p class="featured-excerpt">
+                        デジタル時代にあえて紙を選ぶ理由。
+                        コピー機とホチキスで綴る、手作りの反逆。
+                        90年代から今も続くZINEシーンのリアル。
+                    </p>
+                    <a href="#" class="read-more">続きを読む →</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="articles">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">LATEST</h2>
+            </div>
+            <div class="articles-grid">
+                <article class="article-card">
+                    <div class="article-number">01</div>
+                    <span class="article-category">Music</span>
+                    <h3 class="article-title">地下室のライブハウス</h3>
+                    <span class="article-date">2024.12.14</span>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-number">02</div>
+                    <span class="article-category">Art</span>
+                    <h3 class="article-title">ステンシルの技法</h3>
+                    <span class="article-date">2024.12.12</span>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-number">03</div>
+                    <span class="article-category">Fashion</span>
+                    <h3 class="article-title">古着とカスタム</h3>
+                    <span class="article-date">2024.12.10</span>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-number">04</div>
+                    <span class="article-category">DIY</span>
+                    <h3 class="article-title">自分でレコード作る</h3>
+                    <span class="article-date">2024.12.08</span>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-number">05</div>
+                    <span class="article-category">Culture</span>
+                    <h3 class="article-title">スケートパークの夜</h3>
+                    <span class="article-date">2024.12.05</span>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-number">06</div>
+                    <span class="article-category">Opinion</span>
+                    <h3 class="article-title">売れたら終わりか？</h3>
+                    <span class="article-date">2024.12.02</span>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-inner">
+                <h2 class="newsletter-title">JOIN THE RIOT</h2>
+                <p class="newsletter-text">アンダーグラウンドからの便り</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="YOUR EMAIL">
+                    <button type="submit" class="newsletter-btn">JOIN!</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo">RIOT!</div>
+            <div class="footer-links">
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+                <a href="#">Bandcamp</a>
+            </div>
+            <p class="footer-copy">© 2024 RIOT! — DIY OR DIE</p>
+        </div>
+    </footer>
+</body>
+</html>

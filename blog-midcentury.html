@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATOMIC — Mid-Century Modern Blog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mustard: #d4a03b;
+            --orange: #e85d04;
+            --teal: #2a9d8f;
+            --cream: #faf3e0;
+            --brown: #5c4033;
+            --olive: #606c38;
+            --coral: #e07a5f;
+            --navy: #264653;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--brown);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        header {
+            padding: 1.5rem 0;
+            border-bottom: 3px solid var(--brown);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--orange);
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--cream);
+            border-radius: 50%;
+        }
+
+        .logo-text {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.5rem;
+            color: var(--brown);
+            letter-spacing: 0.1em;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--brown);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--orange);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        nav a:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-content {
+            padding-right: 2rem;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--cream);
+            background: var(--orange);
+            padding: 0.5rem 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.1;
+            color: var(--brown);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title span {
+            color: var(--orange);
+        }
+
+        .hero-excerpt {
+            font-size: 1.1rem;
+            color: var(--brown);
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 1rem 2rem;
+            background: var(--teal);
+            border: none;
+            color: var(--cream);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hero-btn:hover {
+            background: var(--navy);
+            transform: translateX(5px);
+        }
+
+        .hero-visual {
+            position: relative;
+            aspect-ratio: 1;
+        }
+
+        .hero-shape {
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .hero-shape.large {
+            width: 100%;
+            height: 100%;
+            background: var(--mustard);
+        }
+
+        .hero-shape.medium {
+            width: 60%;
+            height: 60%;
+            background: var(--teal);
+            top: 20%;
+            right: -10%;
+        }
+
+        .hero-shape.small {
+            width: 30%;
+            height: 30%;
+            background: var(--coral);
+            bottom: 10%;
+            left: 10%;
+        }
+
+        .hero-shape.dot {
+            width: 15%;
+            height: 15%;
+            background: var(--brown);
+            top: 10%;
+            left: 20%;
+        }
+
+        /* Section Header */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0;
+            border-bottom: 3px solid var(--brown);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.5rem;
+            color: var(--brown);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: var(--orange);
+            border-radius: 50%;
+        }
+
+        .section-link {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--teal);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Featured */
+        .featured {
+            padding: 2rem 0 4rem;
+        }
+
+        .featured-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: var(--mustard);
+            overflow: hidden;
+        }
+
+        .featured-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            position: relative;
+        }
+
+        .featured-shape-container {
+            position: relative;
+            width: 80%;
+            aspect-ratio: 1;
+        }
+
+        .featured-shape {
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .featured-shape.a {
+            width: 100%;
+            height: 100%;
+            background: var(--cream);
+        }
+
+        .featured-shape.b {
+            width: 60%;
+            height: 60%;
+            background: var(--coral);
+            top: 20%;
+            left: 40%;
+        }
+
+        .featured-shape.c {
+            width: 30%;
+            height: 30%;
+            background: var(--teal);
+            bottom: 20%;
+            left: 20%;
+        }
+
+        .featured-content {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: var(--brown);
+            color: var(--cream);
+        }
+
+        .featured-category {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--mustard);
+            margin-bottom: 1.5rem;
+        }
+
+        .featured-title {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .featured-excerpt {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .read-more {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--mustard);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s ease;
+        }
+
+        .read-more:hover {
+            gap: 1rem;
+        }
+
+        /* Articles */
+        .articles {
+            padding: 2rem 0 4rem;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .article-card {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .article-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .article-image {
+            aspect-ratio: 4/3;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-card:nth-child(1) .article-image { background: var(--teal); }
+        .article-card:nth-child(2) .article-image { background: var(--coral); }
+        .article-card:nth-child(3) .article-image { background: var(--olive); }
+        .article-card:nth-child(4) .article-image { background: var(--mustard); }
+        .article-card:nth-child(5) .article-image { background: var(--navy); }
+        .article-card:nth-child(6) .article-image { background: var(--orange); }
+
+        .article-image::before {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 60%;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+        }
+
+        .article-category {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--orange);
+            margin-bottom: 0.5rem;
+        }
+
+        .article-title {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.3;
+            color: var(--brown);
+            margin-bottom: 0.5rem;
+        }
+
+        .article-date {
+            font-size: 0.75rem;
+            color: var(--brown);
+            opacity: 0.6;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            padding: 4rem 0;
+            background: var(--teal);
+        }
+
+        .newsletter-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .newsletter-content {
+            color: var(--cream);
+        }
+
+        .newsletter-title {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2.5rem;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-text {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            display: flex;
+            background: var(--cream);
+            padding: 0.5rem;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            font-family: inherit;
+            font-size: 0.9rem;
+            border: none;
+            background: transparent;
+            color: var(--brown);
+            outline: none;
+        }
+
+        .newsletter-btn {
+            padding: 1rem 2rem;
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: var(--orange);
+            border: none;
+            color: var(--cream);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            background: var(--brown);
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 0;
+            border-top: 3px solid var(--brown);
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.25rem;
+            color: var(--brown);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--brown);
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        .footer-copy {
+            font-size: 0.75rem;
+            color: var(--brown);
+            opacity: 0.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+            .hero-visual {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            .featured-card {
+                grid-template-columns: 1fr;
+            }
+            .articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .newsletter-inner {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav { display: none; }
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            .newsletter-form {
+                flex-direction: column;
+            }
+            .footer-inner {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-inner">
+                <div class="logo">
+                    <div class="logo-icon"></div>
+                    <span class="logo-text">ATOMIC</span>
+                </div>
+                <nav>
+                    <a href="#">Home</a>
+                    <a href="#">Design</a>
+                    <a href="#">Lifestyle</a>
+                    <a href="#">Archive</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+            <div class="hero-content">
+                <span class="hero-tag">Mid-Century Modern</span>
+                <h1 class="hero-title">レトロな<span>未来</span>を生きる</h1>
+                <p class="hero-excerpt">
+                    1950-60年代のデザインが持つ楽観的な未来像。<br>
+                    オーガニックなフォルムと大胆なカラーの世界へ。
+                </p>
+                <button class="hero-btn">Explore →</button>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-shape large"></div>
+                <div class="hero-shape medium"></div>
+                <div class="hero-shape small"></div>
+                <div class="hero-shape dot"></div>
+            </div>
+    </section>
+
+    <section class="featured">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Featured</h2>
+                <a href="#" class="section-link">View All →</a>
+            </div>
+            <article class="featured-card">
+                <div class="featured-image">
+                    <div class="featured-shape-container">
+                        <div class="featured-shape a"></div>
+                        <div class="featured-shape b"></div>
+                        <div class="featured-shape c"></div>
+                    </div>
+                </div>
+                <div class="featured-content">
+                    <span class="featured-category">Furniture</span>
+                    <h3 class="featured-title">イームズの遺産：<br>民主的なデザイン</h3>
+                    <p class="featured-excerpt">
+                        チャールズ＆レイ・イームズが追求した「最良のものを、
+                        最も多くの人に、最も安く」という理念。
+                        その革新的なアプローチは今なお色褪せない。
+                    </p>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="articles">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Latest</h2>
+                <a href="#" class="section-link">Archive →</a>
+            </div>
+            <div class="articles-grid">
+                <article class="article-card">
+                    <div class="article-image"></div>
+                    <span class="article-category">Architecture</span>
+                    <h3 class="article-title">ケーススタディハウス</h3>
+                    <span class="article-date">2024.12.14</span>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-image"></div>
+                    <span class="article-category">Color</span>
+                    <h3 class="article-title">アトミックカラーパレット</h3>
+                    <span class="article-date">2024.12.12</span>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-image"></div>
+                    <span class="article-category">Pattern</span>
+                    <h3 class="article-title">アトミックモチーフ</h3>
+                    <span class="article-date">2024.12.10</span>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-image"></div>
+                    <span class="article-category">Interior</span>
+                    <h3 class="article-title">サンバーストクロック</h3>
+                    <span class="article-date">2024.12.08</span>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-image"></div>
+                    <span class="article-category">Typography</span>
+                    <h3 class="article-title">ジェットエイジの書体</h3>
+                    <span class="article-date">2024.12.05</span>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-image"></div>
+                    <span class="article-category">Lifestyle</span>
+                    <h3 class="article-title">カクテルカルチャー</h3>
+                    <span class="article-date">2024.12.02</span>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-inner">
+                <div class="newsletter-content">
+                    <h2 class="newsletter-title">JOIN THE<br>ATOMIC AGE</h2>
+                    <p class="newsletter-text">週刊でレトロモダンな情報をお届け</p>
+                </div>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="your@email.com">
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-logo">ATOMIC</div>
+                <div class="footer-links">
+                    <a href="#">About</a>
+                    <a href="#">Contact</a>
+                    <a href="#">Instagram</a>
+                </div>
+                <span class="footer-copy">© 2024 ATOMIC</span>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

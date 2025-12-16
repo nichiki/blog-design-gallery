@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MONO — Editorial Magazine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #1a1a1a;
+            --white: #fafafa;
+            --gray: #888;
+            --light-gray: #e8e8e8;
+            --accent: #c9a227;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 4rem;
+        }
+
+        /* Header */
+        header {
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            letter-spacing: 0.3em;
+        }
+
+        nav {
+            display: flex;
+            gap: 3rem;
+        }
+
+        nav a {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            color: var(--black);
+            text-decoration: none;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--black);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .header-issue {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: var(--gray);
+            text-transform: uppercase;
+        }
+
+        /* Hero */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 85vh;
+            border-bottom: 1px solid var(--light-gray);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-main {
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-right: 1px solid var(--light-gray);
+        }
+
+        .hero-category {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.3em;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 400;
+            line-height: 1.15;
+            margin-bottom: 2rem;
+        }
+
+        .hero-title em {
+            font-style: italic;
+        }
+
+        .hero-excerpt {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: var(--gray);
+            max-width: 450px;
+            margin-bottom: 3rem;
+            line-height: 1.9;
+        }
+
+        .hero-meta {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            font-size: 0.75rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .hero-image {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-image-inner {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #e8dcc4 0%, #c9a227 100%);
+        }
+
+        .hero-image-text {
+            position: absolute;
+            bottom: 4rem;
+            right: 4rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 10rem;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.2);
+            line-height: 1;
+        }
+
+        /* Featured Grid */
+        .featured {
+            padding: 6rem 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 4rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+        }
+
+        .section-link {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            color: var(--black);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .featured-card {
+            cursor: pointer;
+        }
+
+        .featured-card:first-child {
+            grid-row: span 2;
+            position: relative;
+        }
+
+        .featured-image {
+            aspect-ratio: 4/5;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-card:first-child .featured-image {
+            aspect-ratio: auto;
+            height: 100%;
+            margin-bottom: 0;
+        }
+
+        .featured-card:not(:first-child) .featured-image {
+            aspect-ratio: 16/10;
+        }
+
+        /* 最初のカードのテキストをオーバーレイ */
+        .featured-card:first-child .featured-category,
+        .featured-card:first-child .featured-title,
+        .featured-card:first-child .featured-excerpt {
+            position: absolute;
+            left: 2rem;
+            right: 2rem;
+            color: white;
+        }
+
+        .featured-card:first-child .featured-category {
+            bottom: 12rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .featured-card:first-child .featured-title {
+            bottom: 6rem;
+            color: white;
+        }
+
+        .featured-card:first-child .featured-title:hover {
+            color: white;
+        }
+
+        .featured-card:first-child .featured-excerpt {
+            bottom: 2rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .featured-image-inner {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s ease;
+        }
+
+        .featured-card:hover .featured-image-inner {
+            transform: scale(1.05);
+        }
+
+        .featured-card:nth-child(1) .featured-image-inner { background: linear-gradient(135deg, #2c3e50, #3498db); }
+        .featured-card:nth-child(2) .featured-image-inner { background: linear-gradient(135deg, #c9a227, #f4d03f); }
+        .featured-card:nth-child(3) .featured-image-inner { background: linear-gradient(135deg, #1a1a1a, #4a4a4a); }
+        .featured-card:nth-child(4) .featured-image-inner { background: linear-gradient(135deg, #8e44ad, #3498db); }
+        .featured-card:nth-child(5) .featured-image-inner { background: linear-gradient(135deg, #e74c3c, #c9a227); }
+
+        .featured-number {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 0.9rem;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .featured-category {
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        .featured-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 400;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .featured-card:first-child .featured-title {
+            font-size: 1.8rem;
+        }
+
+        .featured-card:hover .featured-title {
+            color: var(--accent);
+        }
+
+        .featured-card:first-child:hover .featured-title {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .featured-excerpt {
+            font-size: 0.9rem;
+            color: var(--gray);
+            line-height: 1.7;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Latest Articles */
+        .latest {
+            padding: 6rem 0;
+        }
+
+        .latest-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .latest-item {
+            display: grid;
+            grid-template-columns: 80px 1fr auto;
+            gap: 2rem;
+            align-items: center;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--light-gray);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .latest-item:hover {
+            padding-left: 1rem;
+        }
+
+        .latest-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-style: italic;
+            color: var(--light-gray);
+            transition: color 0.3s ease;
+        }
+
+        .latest-item:hover .latest-number {
+            color: var(--accent);
+        }
+
+        .latest-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .latest-category {
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            color: var(--gray);
+            text-transform: uppercase;
+        }
+
+        .latest-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .latest-item:hover .latest-title {
+            color: var(--accent);
+        }
+
+        .latest-date {
+            font-size: 0.75rem;
+            color: var(--gray);
+            letter-spacing: 0.1em;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            padding: 8rem 0;
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .newsletter-inner {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .newsletter-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-title em {
+            font-style: italic;
+        }
+
+        .newsletter-text {
+            font-size: 1rem;
+            color: var(--gray);
+            margin-bottom: 3rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1.25rem 1.5rem;
+            background: transparent;
+            border: none;
+            color: var(--white);
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .newsletter-input::placeholder {
+            color: var(--gray);
+        }
+
+        .newsletter-btn {
+            padding: 1.25rem 2.5rem;
+            background: var(--white);
+            border: none;
+            color: var(--black);
+            font-family: inherit;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 0;
+            border-top: 1px solid var(--light-gray);
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            letter-spacing: 0.2em;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .footer-links a {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            color: var(--gray);
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--black);
+        }
+
+        .footer-copy {
+            font-size: 0.7rem;
+            color: var(--gray);
+            letter-spacing: 0.1em;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 0 2rem;
+            }
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 0 2rem;
+            }
+            .hero-main {
+                border-right: none;
+                border-bottom: 1px solid var(--light-gray);
+                padding: 4rem 0;
+            }
+            .hero-image {
+                min-height: 400px;
+            }
+            .featured-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .featured-card:first-child {
+                grid-column: span 2;
+                grid-row: span 1;
+            }
+            .featured-card:first-child .featured-image {
+                aspect-ratio: 21/9;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-inner {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            nav {
+                gap: 1.5rem;
+            }
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+            .featured-card:first-child {
+                grid-column: span 1;
+            }
+            .latest-item {
+                grid-template-columns: 50px 1fr;
+            }
+            .latest-date {
+                display: none;
+            }
+            .newsletter-form {
+                flex-direction: column;
+            }
+            .footer-inner {
+                flex-direction: column;
+                gap: 2rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-inner">
+                <span class="header-issue">Issue No. 127</span>
+                <div class="logo">MONO</div>
+                <nav>
+                    <a href="#">Culture</a>
+                    <a href="#">Design</a>
+                    <a href="#">Travel</a>
+                    <a href="#">Life</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-main">
+            <span class="hero-category">Featured Essay</span>
+            <h1 class="hero-title">The Art of <em>Slow</em> Living in a Fast World</h1>
+            <p class="hero-excerpt">
+                忙しさを美徳とする時代に、あえて立ち止まることを選ぶ人々がいる。
+                彼らが見つけた「ゆっくり生きる」という哲学とは。
+            </p>
+            <div class="hero-meta">
+                <span>By Yuki Tanaka</span>
+                <span>December 2024</span>
+                <span>12 min read</span>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="hero-image-inner"></div>
+            <span class="hero-image-text">01</span>
+        </div>
+    </section>
+
+    <section class="featured">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Editor's Picks</h2>
+                <a href="#" class="section-link">View All →</a>
+            </div>
+            <div class="featured-grid">
+                <article class="featured-card">
+                    <div class="featured-image">
+                        <div class="featured-image-inner"></div>
+                        <span class="featured-number">02</span>
+                    </div>
+                    <span class="featured-category">Architecture</span>
+                    <h3 class="featured-title">光と影の建築家、安藤忠雄の世界</h3>
+                    <p class="featured-excerpt">コンクリートという無機質な素材に、いかにして詩情を宿らせるのか。</p>
+                </article>
+
+                <article class="featured-card">
+                    <div class="featured-image">
+                        <div class="featured-image-inner"></div>
+                        <span class="featured-number">03</span>
+                    </div>
+                    <span class="featured-category">Culture</span>
+                    <h3 class="featured-title">言葉を超えた対話</h3>
+                </article>
+
+                <article class="featured-card">
+                    <div class="featured-image">
+                        <div class="featured-image-inner"></div>
+                        <span class="featured-number">04</span>
+                    </div>
+                    <span class="featured-category">Design</span>
+                    <h3 class="featured-title">Less, but Better</h3>
+                </article>
+
+                <article class="featured-card">
+                    <div class="featured-image">
+                        <div class="featured-image-inner"></div>
+                        <span class="featured-number">05</span>
+                    </div>
+                    <span class="featured-category">Travel</span>
+                    <h3 class="featured-title">北欧の静謐</h3>
+                </article>
+
+                <article class="featured-card">
+                    <div class="featured-image">
+                        <div class="featured-image-inner"></div>
+                        <span class="featured-number">06</span>
+                    </div>
+                    <span class="featured-category">Life</span>
+                    <h3 class="featured-title">朝の習慣</h3>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="latest">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Latest Stories</h2>
+                <a href="#" class="section-link">Archive →</a>
+            </div>
+            <div class="latest-list">
+                <article class="latest-item">
+                    <span class="latest-number">07</span>
+                    <div class="latest-content">
+                        <span class="latest-category">Essay</span>
+                        <h3 class="latest-title">記憶の中の風景について</h3>
+                    </div>
+                    <span class="latest-date">Dec 14, 2024</span>
+                </article>
+
+                <article class="latest-item">
+                    <span class="latest-number">08</span>
+                    <div class="latest-content">
+                        <span class="latest-category">Interview</span>
+                        <h3 class="latest-title">職人の手、職人の目</h3>
+                    </div>
+                    <span class="latest-date">Dec 12, 2024</span>
+                </article>
+
+                <article class="latest-item">
+                    <span class="latest-number">09</span>
+                    <div class="latest-content">
+                        <span class="latest-category">Opinion</span>
+                        <h3 class="latest-title">デジタルデトックスの効用</h3>
+                    </div>
+                    <span class="latest-date">Dec 10, 2024</span>
+                </article>
+
+                <article class="latest-item">
+                    <span class="latest-number">10</span>
+                    <div class="latest-content">
+                        <span class="latest-category">Review</span>
+                        <h3 class="latest-title">今月の3冊：静寂について</h3>
+                    </div>
+                    <span class="latest-date">Dec 08, 2024</span>
+                </article>
+
+                <article class="latest-item">
+                    <span class="latest-number">11</span>
+                    <div class="latest-content">
+                        <span class="latest-category">Photo Essay</span>
+                        <h3 class="latest-title">東京、午前5時</h3>
+                    </div>
+                    <span class="latest-date">Dec 05, 2024</span>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-inner">
+                <h2 class="newsletter-title">Stay <em>Inspired</em></h2>
+                <p class="newsletter-text">週に一度、厳選されたストーリーをお届けします。</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email">
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-logo">MONO</div>
+                <div class="footer-links">
+                    <a href="#">About</a>
+                    <a href="#">Contact</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Twitter</a>
+                </div>
+                <span class="footer-copy">© 2024 MONO Magazine</span>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

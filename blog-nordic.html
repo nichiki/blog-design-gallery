@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hygge — Nordic Living</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --snow: #fafbfc;
+            --cloud: #f0f2f5;
+            --stone: #8c9196;
+            --charcoal: #3a3f47;
+            --pine: #2d5a4a;
+            --wood: #c4a77d;
+            --berry: #a04668;
+            --fjord: #5a7d9a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--snow);
+            color: var(--charcoal);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        header {
+            padding: 2rem 0;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--charcoal);
+            letter-spacing: 0.1em;
+        }
+
+        .logo span {
+            color: var(--pine);
+        }
+
+        nav {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--stone);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--charcoal);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 4rem 0 6rem;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content {
+            padding-right: 2rem;
+        }
+
+        .hero-tag {
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--pine);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 300;
+            line-height: 1.2;
+            color: var(--charcoal);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title strong {
+            font-weight: 600;
+        }
+
+        .hero-subtitle {
+            font-size: 1.05rem;
+            font-weight: 300;
+            color: var(--stone);
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 1rem 2rem;
+            background: var(--charcoal);
+            border: none;
+            border-radius: 8px;
+            color: var(--snow);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hero-btn:hover {
+            background: var(--pine);
+            transform: translateY(-2px);
+        }
+
+        .hero-image {
+            aspect-ratio: 4/5;
+            background: var(--cloud);
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--fjord) 0%, var(--pine) 100%);
+            opacity: 0.3;
+        }
+
+        .hero-image-text {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            font-size: 6rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Featured */
+        .featured {
+            padding: 4rem 0;
+            background: var(--cloud);
+            border-radius: 24px;
+            margin-bottom: 4rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding: 0 3rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--charcoal);
+        }
+
+        .section-link {
+            font-size: 0.85rem;
+            color: var(--stone);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .section-link:hover {
+            color: var(--charcoal);
+        }
+
+        .featured-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            padding: 0 3rem;
+            align-items: center;
+        }
+
+        .featured-image {
+            aspect-ratio: 4/3;
+            background: linear-gradient(135deg, var(--wood), var(--pine));
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .featured-image::after {
+            content: '🕯️';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            opacity: 0.5;
+        }
+
+        .featured-content {
+            padding: 1rem;
+        }
+
+        .featured-category {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--pine);
+            margin-bottom: 1rem;
+        }
+
+        .featured-title {
+            font-size: 1.75rem;
+            font-weight: 500;
+            line-height: 1.3;
+            color: var(--charcoal);
+            margin-bottom: 1rem;
+        }
+
+        .featured-excerpt {
+            font-size: 0.95rem;
+            font-weight: 300;
+            color: var(--stone);
+            margin-bottom: 1.5rem;
+            line-height: 1.9;
+        }
+
+        .read-more {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--charcoal);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s ease;
+        }
+
+        .read-more:hover {
+            gap: 1rem;
+        }
+
+        /* Articles */
+        .articles {
+            padding: 2rem 0 4rem;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .article-card {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .article-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .article-image {
+            aspect-ratio: 4/3;
+            border-radius: 12px;
+            margin-bottom: 1.25rem;
+            position: relative;
+        }
+
+        .article-card:nth-child(1) .article-image { background: linear-gradient(135deg, var(--fjord), var(--pine)); }
+        .article-card:nth-child(2) .article-image { background: linear-gradient(135deg, var(--wood), var(--berry)); }
+        .article-card:nth-child(3) .article-image { background: linear-gradient(135deg, var(--stone), var(--fjord)); }
+        .article-card:nth-child(4) .article-image { background: linear-gradient(135deg, var(--pine), var(--wood)); }
+        .article-card:nth-child(5) .article-image { background: linear-gradient(135deg, var(--berry), var(--stone)); }
+        .article-card:nth-child(6) .article-image { background: linear-gradient(135deg, var(--charcoal), var(--fjord)); }
+
+        .article-emoji {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.5rem;
+            opacity: 0.5;
+        }
+
+        .article-category {
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--pine);
+            margin-bottom: 0.5rem;
+        }
+
+        .article-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            line-height: 1.4;
+            color: var(--charcoal);
+            margin-bottom: 0.5rem;
+        }
+
+        .article-date {
+            font-size: 0.8rem;
+            font-weight: 300;
+            color: var(--stone);
+        }
+
+        /* Newsletter */
+        .newsletter {
+            padding: 5rem 0;
+            background: var(--charcoal);
+            border-radius: 24px;
+            margin-bottom: 4rem;
+        }
+
+        .newsletter-inner {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 0 2rem;
+        }
+
+        .newsletter-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .newsletter-title {
+            font-size: 1.75rem;
+            font-weight: 500;
+            color: var(--snow);
+            margin-bottom: 0.75rem;
+        }
+
+        .newsletter-text {
+            font-size: 0.95rem;
+            font-weight: 300;
+            color: var(--stone);
+            margin-bottom: 2rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem 1.25rem;
+            font-family: inherit;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: var(--snow);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-input::placeholder {
+            color: var(--stone);
+        }
+
+        .newsletter-input:focus {
+            border-color: var(--pine);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .newsletter-btn {
+            padding: 1rem 1.5rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 500;
+            background: var(--snow);
+            border: none;
+            border-radius: 8px;
+            color: var(--charcoal);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            background: var(--pine);
+            color: var(--snow);
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 0 3rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--stone);
+            text-decoration: none;
+        }
+
+        .footer-copy {
+            font-size: 0.8rem;
+            font-weight: 300;
+            color: var(--stone);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-image {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+            .featured-card {
+                grid-template-columns: 1fr;
+            }
+            .articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-inner {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            nav {
+                gap: 1.5rem;
+            }
+            .section-header {
+                padding: 0 1.5rem;
+            }
+            .featured-card {
+                padding: 0 1.5rem;
+            }
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-inner">
+                <div class="logo">hygge<span>.</span></div>
+                <nav>
+                    <a href="#">ホーム</a>
+                    <a href="#">暮らし</a>
+                    <a href="#">インテリア</a>
+                    <a href="#">レシピ</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <p class="hero-tag">Nordic Living</p>
+                    <h1 class="hero-title">心地よさを<br><strong>シンプル</strong>に暮らす</h1>
+                    <p class="hero-subtitle">
+                        北欧の知恵に学ぶ、穏やかで温かい日々の過ごし方。<br>
+                        ヒュッゲな暮らしのヒントをお届けします。
+                    </p>
+                    <button class="hero-btn">探索する →</button>
+                </div>
+                <div class="hero-image">
+                    <span class="hero-image-text">hygge</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured">
+        <div class="section-header">
+            <h2 class="section-title">今週のおすすめ</h2>
+            <a href="#" class="section-link">すべて見る →</a>
+        </div>
+        <article class="featured-card">
+            <div class="featured-image"></div>
+            <div class="featured-content">
+                <span class="featured-category">Lifestyle</span>
+                <h3 class="featured-title">キャンドルと過ごす<br>冬の夜のヒュッゲ</h3>
+                <p class="featured-excerpt">
+                    デンマーク人が世界で最も幸福な理由のひとつ、それが「ヒュッゲ」。
+                    キャンドルの灯りとともに過ごす、温かな時間の作り方をご紹介。
+                </p>
+                <a href="#" class="read-more">続きを読む →</a>
+            </div>
+        </article>
+    </section>
+
+    <section class="articles">
+        <div class="container">
+            <div class="section-header" style="padding: 0; margin-bottom: 2rem;">
+                <h2 class="section-title">最新の記事</h2>
+                <a href="#" class="section-link">アーカイブ →</a>
+            </div>
+            <div class="articles-grid">
+                <article class="article-card">
+                    <div class="article-image">
+                        <span class="article-emoji">🪵</span>
+                    </div>
+                    <span class="article-category">Interior</span>
+                    <h3 class="article-title">木の温もりを取り入れる</h3>
+                    <span class="article-date">2024.12.14</span>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-image">
+                        <span class="article-emoji">☕</span>
+                    </div>
+                    <span class="article-category">Fika</span>
+                    <h3 class="article-title">フィーカの時間</h3>
+                    <span class="article-date">2024.12.12</span>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-image">
+                        <span class="article-emoji">🧦</span>
+                    </div>
+                    <span class="article-category">Winter</span>
+                    <h3 class="article-title">北欧の冬支度</h3>
+                    <span class="article-date">2024.12.10</span>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-image">
+                        <span class="article-emoji">🍲</span>
+                    </div>
+                    <span class="article-category">Recipe</span>
+                    <h3 class="article-title">スウェーデンのミートボール</h3>
+                    <span class="article-date">2024.12.08</span>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-image">
+                        <span class="article-emoji">💡</span>
+                    </div>
+                    <span class="article-category">Design</span>
+                    <h3 class="article-title">北欧照明の選び方</h3>
+                    <span class="article-date">2024.12.05</span>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-image">
+                        <span class="article-emoji">🌲</span>
+                    </div>
+                    <span class="article-category">Nature</span>
+                    <h3 class="article-title">フリルフスリヴの精神</h3>
+                    <span class="article-date">2024.12.02</span>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <section class="newsletter">
+            <div class="newsletter-inner">
+                <div class="newsletter-icon">✉️</div>
+                <h2 class="newsletter-title">心地よい暮らしのヒント</h2>
+                <p class="newsletter-text">週に一度、北欧の暮らしのアイデアをお届け</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="メールアドレス">
+                    <button type="submit" class="newsletter-btn">登録</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo">hygge.</div>
+            <div class="footer-links">
+                <a href="#">このサイトについて</a>
+                <a href="#">お問い合わせ</a>
+                <a href="#">Instagram</a>
+            </div>
+            <p class="footer-copy">© 2024 hygge. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

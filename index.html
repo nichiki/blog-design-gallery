@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Design Gallery - 20 Styles</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #fafafa;
+            color: #1a1a1a;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .header {
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+        }
+
+        .header h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+            color: #1a1a1a;
+        }
+
+        .header p {
+            color: #888;
+            font-size: 0.95rem;
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            border: 1px solid #eee;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+            border-color: #ddd;
+        }
+
+        .card-preview {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            background: #f5f5f5;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-preview iframe {
+            width: 400%;
+            height: 400%;
+            transform: scale(0.25);
+            transform-origin: top left;
+            border: none;
+            pointer-events: none;
+        }
+
+        .card-number {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #fff;
+            background: rgba(0,0,0,0.5);
+            padding: 4px 10px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .card-info {
+            padding: 1.25rem 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: #1a1a1a;
+        }
+
+        .card-style {
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 1rem;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .tag {
+            font-size: 0.65rem;
+            font-weight: 500;
+            padding: 0.3rem 0.65rem;
+            background: #f5f5f5;
+            border-radius: 6px;
+            color: #666;
+        }
+
+        .card-actions {
+            padding: 0 1.5rem 1.5rem;
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.65rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #333;
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background: #eee;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1.5rem;
+        }
+
+        .modal.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            background: #fff;
+            border-radius: 12px 12px 0 0;
+            border: 1px solid #eee;
+            border-bottom: none;
+        }
+
+        .modal-title {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #1a1a1a;
+        }
+
+        .modal-nav {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .modal-nav button {
+            width: 36px;
+            height: 36px;
+            border: 1px solid #eee;
+            background: #fff;
+            color: #555;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.15s;
+        }
+
+        .modal-nav button:hover {
+            background: #f5f5f5;
+            border-color: #ddd;
+        }
+
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            border: 1px solid #eee;
+            background: #fff;
+            color: #888;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.25rem;
+            transition: all 0.15s;
+        }
+
+        .modal-close:hover {
+            background: #fee;
+            border-color: #fcc;
+            color: #e55;
+        }
+
+        .modal-body {
+            flex: 1;
+            background: #fff;
+            border-radius: 0 0 12px 12px;
+            border: 1px solid #eee;
+            border-top: none;
+            overflow: hidden;
+        }
+
+        .modal-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: #aaa;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 3rem 1.5rem 2rem;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            .gallery {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .card-preview {
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Blog Design Gallery</h1>
+        <p>20 unique design styles</p>
+    </header>
+
+    <main class="container">
+        <div class="gallery" id="gallery"></div>
+    </main>
+
+    <footer class="footer">
+        Click card to preview / Use arrow keys to navigate
+    </footer>
+
+    <div class="modal" id="modal">
+        <div class="modal-header">
+            <span class="modal-title" id="modalTitle">Design Preview</span>
+            <div class="modal-nav">
+                <button onclick="prevDesign()" title="Previous">&#8592;</button>
+                <button onclick="nextDesign()" title="Next">&#8594;</button>
+            </div>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <iframe id="modalFrame" src=""></iframe>
+        </div>
+    </div>
+
+    <script>
+        const designs = [
+            { file: 'blog-top.html', title: 'Cyberpunk Neon', style: 'サイバーパンク / ネオン', tags: ['Glitch', 'Neon Glow', 'Dark'] },
+            { file: 'blog-wabi.html', title: 'Wabi-Sabi', style: '和モダン / 侘び寂び', tags: ['Japanese', 'Texture', 'Traditional'] },
+            { file: 'blog-vaporwave.html', title: 'Vaporwave', style: 'ヴェイパーウェイブ', tags: ['80s', 'Sunset', 'Retro'] },
+            { file: 'blog-brutalist.html', title: 'Brutalist', style: 'ブルータリスト', tags: ['Raw', 'Monochrome', 'Bold'] },
+            { file: 'blog-editorial.html', title: 'Editorial', style: 'エディトリアル', tags: ['Magazine', 'Elegant', 'Serif'] },
+            { file: 'blog-pastel.html', title: 'Pastel Dream', style: 'パステル / ソフト', tags: ['Soft', 'Rounded', 'Light'] },
+            { file: 'blog-academia.html', title: 'Dark Academia', style: 'ダークアカデミア', tags: ['Classical', 'Sepia', 'Scholarly'] },
+            { file: 'blog-y2k.html', title: 'Y2K Future', style: 'Y2K / 2000年代', tags: ['Metallic', 'Holographic', 'Chrome'] },
+            { file: 'blog-swiss.html', title: 'Swiss Design', style: 'スイスデザイン', tags: ['Grid', 'Helvetica', 'Geometric'] },
+            { file: 'blog-natural.html', title: 'Natural Organic', style: 'ナチュラル', tags: ['Earth Tones', 'Nature', 'Warm'] },
+            { file: 'blog-glass.html', title: 'Glassmorphism', style: 'グラスモーフィズム', tags: ['Glass', 'Blur', 'Gradient'] },
+            { file: 'blog-neumorphism.html', title: 'Neumorphism', style: 'ニューモーフィズム', tags: ['Soft UI', 'Shadow', '3D'] },
+            { file: 'blog-artdeco.html', title: 'Art Deco', style: 'アールデコ', tags: ['1920s', 'Gold', 'Luxury'] },
+            { file: 'blog-midcentury.html', title: 'Mid-Century Modern', style: 'ミッドセンチュリー', tags: ['1950s', 'Atomic', 'Retro'] },
+            { file: 'blog-psychedelic.html', title: 'Psychedelic', style: 'サイケデリック', tags: ['Rainbow', 'Wavy', 'Trippy'] },
+            { file: 'blog-nordic.html', title: 'Nordic', style: 'ノルディック / 北欧', tags: ['Minimal', 'White', 'Hygge'] },
+            { file: 'blog-industrial.html', title: 'Industrial', style: 'インダストリアル', tags: ['Steel', 'Concrete', 'Raw'] },
+            { file: 'blog-popart.html', title: 'Pop Art', style: 'ポップアート', tags: ['Vivid', 'Comic', 'Bold'] },
+            { file: 'blog-grunge.html', title: 'Grunge Punk', style: 'グランジ / パンク', tags: ['Dirty', 'DIY', 'Zine'] },
+            { file: 'blog-fantasy.html', title: 'Fantasy Magic', style: 'ファンタジー', tags: ['Stars', 'Purple', 'Mystical'] }
+        ];
+
+        let currentIndex = 0;
+
+        function createCard(design, index) {
+            return `
+                <div class="card" onclick="openModal(${index})">
+                    <div class="card-preview">
+                        <iframe src="${design.file}" loading="lazy"></iframe>
+                        <div class="card-number">${String(index + 1).padStart(2, '0')}</div>
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-title">${design.title}</h3>
+                        <p class="card-style">${design.style}</p>
+                        <div class="card-tags">
+                            ${design.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="${design.file}" target="_blank" class="btn btn-primary" onclick="event.stopPropagation()">Open</a>
+                        <a href="${design.file}" download class="btn btn-secondary" onclick="event.stopPropagation()">Download</a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderGallery() {
+            document.getElementById('gallery').innerHTML = designs.map((d, i) => createCard(d, i)).join('');
+        }
+
+        function openModal(index) {
+            currentIndex = index;
+            const modal = document.getElementById('modal');
+            document.getElementById('modalFrame').src = designs[index].file;
+            document.getElementById('modalTitle').textContent = `${String(index + 1).padStart(2, '0')}. ${designs[index].title}`;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+            document.getElementById('modalFrame').src = '';
+            document.body.style.overflow = '';
+        }
+
+        function prevDesign() {
+            currentIndex = (currentIndex - 1 + designs.length) % designs.length;
+            openModal(currentIndex);
+        }
+
+        function nextDesign() {
+            currentIndex = (currentIndex + 1) % designs.length;
+            openModal(currentIndex);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (!document.getElementById('modal').classList.contains('active')) return;
+            if (e.key === 'Escape') closeModal();
+            if (e.key === 'ArrowLeft') prevDesign();
+            if (e.key === 'ArrowRight') nextDesign();
+        });
+
+        renderGallery();
+    </script>
+</body>
+</html>

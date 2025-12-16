@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BANG! — Pop Art Magazine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red: #FF0000;
+            --yellow: #FFFF00;
+            --blue: #0000FF;
+            --cyan: #00FFFF;
+            --magenta: #FF00FF;
+            --black: #000000;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Neue', cursive;
+            background: var(--yellow);
+            color: var(--black);
+            line-height: 1.6;
+        }
+
+        /* Halftone pattern */
+        .halftone {
+            background-image: radial-gradient(var(--black) 1px, transparent 1px);
+            background-size: 4px 4px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        header {
+            padding: 1rem 0;
+            background: var(--red);
+            border-bottom: 4px solid var(--black);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Bangers', cursive;
+            font-size: 2.5rem;
+            color: var(--yellow);
+            text-shadow:
+                3px 3px 0 var(--black),
+                -1px -1px 0 var(--black),
+                1px -1px 0 var(--black),
+                -1px 1px 0 var(--black);
+            transform: rotate(-3deg);
+        }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            font-family: 'Bangers', cursive;
+            font-size: 1.25rem;
+            color: var(--white);
+            text-decoration: none;
+            text-shadow: 2px 2px 0 var(--black);
+            transition: transform 0.2s ease;
+        }
+
+        nav a:hover {
+            transform: scale(1.1) rotate(3deg);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 4rem 0;
+            background: var(--cyan);
+            border-bottom: 4px solid var(--black);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(var(--blue) 1.5px, transparent 1.5px);
+            background-size: 8px 8px;
+            opacity: 0.3;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            padding: 2rem;
+            background: var(--white);
+            border: 4px solid var(--black);
+            position: relative;
+        }
+
+        .hero-content::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: -8px;
+            bottom: -8px;
+            background: var(--black);
+            z-index: -1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            font-family: 'Bangers', cursive;
+            font-size: 1rem;
+            color: var(--white);
+            background: var(--red);
+            padding: 0.25rem 1rem;
+            border: 2px solid var(--black);
+            transform: rotate(-2deg);
+            margin-bottom: 1rem;
+        }
+
+        .hero-title {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(3rem, 8vw, 5rem);
+            line-height: 0.9;
+            color: var(--red);
+            text-shadow: 4px 4px 0 var(--black);
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .hero-btn {
+            font-family: 'Bangers', cursive;
+            font-size: 1.5rem;
+            padding: 0.75rem 2rem;
+            background: var(--yellow);
+            border: 3px solid var(--black);
+            color: var(--black);
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.2s ease;
+        }
+
+        .hero-btn::before {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            right: -4px;
+            bottom: -4px;
+            background: var(--black);
+            z-index: -1;
+        }
+
+        .hero-btn:hover {
+            transform: translate(-2px, -2px);
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .speech-bubble {
+            background: var(--white);
+            border: 4px solid var(--black);
+            padding: 3rem;
+            position: relative;
+            border-radius: 20px;
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: 50px;
+            border: 20px solid transparent;
+            border-top-color: var(--black);
+        }
+
+        .speech-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -22px;
+            left: 54px;
+            border: 16px solid transparent;
+            border-top-color: var(--white);
+            z-index: 1;
+        }
+
+        .bubble-text {
+            font-family: 'Bangers', cursive;
+            font-size: 3rem;
+            text-align: center;
+            color: var(--blue);
+            text-shadow: 2px 2px 0 var(--black);
+        }
+
+        /* Featured */
+        .featured {
+            padding: 4rem 0;
+            background: var(--magenta);
+            border-bottom: 4px solid var(--black);
+        }
+
+        .section-title {
+            font-family: 'Bangers', cursive;
+            font-size: 3rem;
+            text-align: center;
+            color: var(--yellow);
+            text-shadow: 4px 4px 0 var(--black);
+            margin-bottom: 3rem;
+            transform: rotate(-2deg);
+        }
+
+        .featured-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: var(--white);
+            border: 4px solid var(--black);
+            position: relative;
+        }
+
+        .featured-card::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: -8px;
+            bottom: -8px;
+            background: var(--black);
+            z-index: -1;
+        }
+
+        .featured-image {
+            background: var(--yellow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            position: relative;
+            border-right: 4px solid var(--black);
+        }
+
+        .featured-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(var(--red) 2px, transparent 2px);
+            background-size: 10px 10px;
+            opacity: 0.3;
+        }
+
+        .featured-content {
+            padding: 2.5rem;
+        }
+
+        .featured-category {
+            display: inline-block;
+            font-family: 'Bangers', cursive;
+            font-size: 1rem;
+            color: var(--white);
+            background: var(--blue);
+            padding: 0.25rem 0.75rem;
+            border: 2px solid var(--black);
+            margin-bottom: 1rem;
+        }
+
+        .featured-title {
+            font-family: 'Bangers', cursive;
+            font-size: 2rem;
+            color: var(--red);
+            text-shadow: 2px 2px 0 var(--black);
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .featured-excerpt {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .read-more {
+            font-family: 'Bangers', cursive;
+            font-size: 1.25rem;
+            color: var(--blue);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Articles */
+        .articles {
+            padding: 4rem 0;
+            background: var(--white);
+            border-bottom: 4px solid var(--black);
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .article-card {
+            background: var(--cyan);
+            border: 4px solid var(--black);
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .article-card::before {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            right: -6px;
+            bottom: -6px;
+            background: var(--black);
+            z-index: -1;
+            transition: all 0.2s ease;
+        }
+
+        .article-card:hover {
+            transform: translate(-3px, -3px);
+        }
+
+        .article-card:nth-child(2) { background: var(--yellow); }
+        .article-card:nth-child(3) { background: var(--magenta); }
+        .article-card:nth-child(4) { background: var(--red); }
+        .article-card:nth-child(5) { background: var(--cyan); }
+        .article-card:nth-child(6) { background: var(--yellow); }
+
+        .article-image {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            border-bottom: 4px solid var(--black);
+            position: relative;
+        }
+
+        .article-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(var(--black) 1px, transparent 1px);
+            background-size: 6px 6px;
+            opacity: 0.2;
+        }
+
+        .article-content {
+            padding: 1.25rem;
+            background: var(--white);
+        }
+
+        .article-category {
+            font-family: 'Bangers', cursive;
+            font-size: 0.85rem;
+            color: var(--red);
+            margin-bottom: 0.5rem;
+        }
+
+        .article-title {
+            font-family: 'Bangers', cursive;
+            font-size: 1.25rem;
+            color: var(--black);
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .article-date {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--blue);
+        }
+
+        /* Newsletter */
+        .newsletter {
+            padding: 4rem 0;
+            background: var(--blue);
+            border-bottom: 4px solid var(--black);
+            position: relative;
+        }
+
+        .newsletter::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(var(--cyan) 2px, transparent 2px);
+            background-size: 12px 12px;
+            opacity: 0.3;
+        }
+
+        .newsletter-inner {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .newsletter-title {
+            font-family: 'Bangers', cursive;
+            font-size: 4rem;
+            color: var(--yellow);
+            text-shadow: 4px 4px 0 var(--black);
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 2rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0;
+            border: 4px solid var(--black);
+            background: var(--white);
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            font-family: 'Comic Neue', cursive;
+            font-size: 1rem;
+            font-weight: 700;
+            border: none;
+            outline: none;
+        }
+
+        .newsletter-btn {
+            padding: 1rem 2rem;
+            font-family: 'Bangers', cursive;
+            font-size: 1.25rem;
+            background: var(--red);
+            border: none;
+            border-left: 4px solid var(--black);
+            color: var(--yellow);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .newsletter-btn:hover {
+            background: var(--yellow);
+            color: var(--red);
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 0;
+            background: var(--black);
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-family: 'Bangers', cursive;
+            font-size: 1.5rem;
+            color: var(--yellow);
+            text-shadow: 2px 2px 0 var(--red);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            font-family: 'Bangers', cursive;
+            font-size: 1rem;
+            color: var(--cyan);
+            text-decoration: none;
+        }
+
+        .footer-copy {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+            .featured-card {
+                grid-template-columns: 1fr;
+            }
+            .featured-image {
+                border-right: none;
+                border-bottom: 4px solid var(--black);
+                min-height: 250px;
+            }
+            .articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav { display: none; }
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            .newsletter-form {
+                flex-direction: column;
+            }
+            .newsletter-btn {
+                border-left: none;
+                border-top: 4px solid var(--black);
+            }
+            .footer-inner {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-inner">
+                <div class="logo">BANG!</div>
+                <nav>
+                    <a href="#">HOME</a>
+                    <a href="#">ART</a>
+                    <a href="#">CULTURE</a>
+                    <a href="#">WOW!</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <span class="hero-badge">★ NEW! ★</span>
+                    <h1 class="hero-title">POP YOUR WORLD!</h1>
+                    <p class="hero-subtitle">
+                        大衆文化を芸術に変えた、ポップアートの世界へようこそ！
+                        ビビッドでポップな視点で日常を切り取る。
+                    </p>
+                    <button class="hero-btn">ENTER! →</button>
+                </div>
+                <div class="hero-image">
+                    <div class="speech-bubble">
+                        <p class="bubble-text">WOW!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured">
+        <div class="container">
+            <h2 class="section-title">★ FEATURED ★</h2>
+            <article class="featured-card">
+                <div class="featured-image">🎨</div>
+                <div class="featured-content">
+                    <span class="featured-category">ART</span>
+                    <h3 class="featured-title">アンディ・ウォーホルの<br>キャンベル缶革命！</h3>
+                    <p class="featured-excerpt">
+                        スーパーマーケットの棚を美術館へ。
+                        大量生産品をアートに変えた、ポップアートの巨匠の物語。
+                    </p>
+                    <a href="#" class="read-more">READ MORE! →</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="articles">
+        <div class="container">
+            <h2 class="section-title">★ LATEST ★</h2>
+            <div class="articles-grid">
+                <article class="article-card">
+                    <div class="article-image">💥</div>
+                    <div class="article-content">
+                        <span class="article-category">COMIC</span>
+                        <h3 class="article-title">リキテンスタインのドット</h3>
+                        <span class="article-date">2024.12.14</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-image">🍌</div>
+                    <div class="article-content">
+                        <span class="article-category">MUSIC</span>
+                        <h3 class="article-title">ヴェルヴェッツとバナナ</h3>
+                        <span class="article-date">2024.12.12</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-image">💋</div>
+                    <div class="article-content">
+                        <span class="article-category">ICON</span>
+                        <h3 class="article-title">マリリンの多重露光</h3>
+                        <span class="article-date">2024.12.10</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-image">🥫</div>
+                    <div class="article-content">
+                        <span class="article-category">DESIGN</span>
+                        <h3 class="article-title">パッケージがアートになる時</h3>
+                        <span class="article-date">2024.12.08</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-image">💰</div>
+                    <div class="article-content">
+                        <span class="article-category">MARKET</span>
+                        <h3 class="article-title">アートとコマーシャル</h3>
+                        <span class="article-date">2024.12.05</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-image">🎭</div>
+                    <div class="article-content">
+                        <span class="article-category">CULTURE</span>
+                        <h3 class="article-title">ファクトリーの日々</h3>
+                        <span class="article-date">2024.12.02</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-inner">
+                <h2 class="newsletter-title">JOIN US!</h2>
+                <p class="newsletter-text">ポップな情報をお届けします！</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="YOUR EMAIL">
+                    <button type="submit" class="newsletter-btn">GO!</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-logo">BANG!</div>
+                <div class="footer-links">
+                    <a href="#">ABOUT</a>
+                    <a href="#">CONTACT</a>
+                    <a href="#">INSTAGRAM</a>
+                </div>
+                <span class="footer-copy">© 2024 BANG! POP ART MAG</span>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

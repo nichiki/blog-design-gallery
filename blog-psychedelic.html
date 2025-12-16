@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✧ COSMIC TRIP ✧</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --purple: #9b59b6;
+            --orange: #ff6b35;
+            --yellow: #ffd93d;
+            --pink: #ff6b9d;
+            --green: #6bcb77;
+            --blue: #4d96ff;
+            --dark: #1a1a2e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: var(--dark);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 30%, var(--purple) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 70%, var(--pink) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, var(--blue) 0%, transparent 50%),
+                var(--dark);
+            animation: psychedelicBg 10s ease infinite;
+            z-index: 0;
+        }
+
+        @keyframes psychedelicBg {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(30deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Wavy text */
+        .wavy {
+            display: inline-block;
+            animation: wave 2s ease-in-out infinite;
+        }
+
+        .wavy:nth-child(2) { animation-delay: 0.1s; }
+        .wavy:nth-child(3) { animation-delay: 0.2s; }
+        .wavy:nth-child(4) { animation-delay: 0.3s; }
+        .wavy:nth-child(5) { animation-delay: 0.4s; }
+
+        @keyframes wave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Header */
+        header {
+            padding: 1.5rem 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Bungee', cursive;
+            font-size: 1.5rem;
+            background: linear-gradient(90deg, var(--orange), var(--yellow), var(--green), var(--blue), var(--purple), var(--pink));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow 3s ease infinite;
+        }
+
+        @keyframes rainbow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--yellow);
+            text-shadow: 0 0 20px var(--yellow);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 6rem 2rem;
+            position: relative;
+        }
+
+        .hero-badge {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--dark);
+            background: var(--yellow);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            margin-bottom: 2rem;
+            animation: pulse 2s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero-title {
+            font-family: 'Bungee', cursive;
+            font-size: clamp(3rem, 10vw, 7rem);
+            line-height: 1;
+            margin-bottom: 1.5rem;
+            text-shadow:
+                4px 4px 0 var(--purple),
+                8px 8px 0 var(--pink),
+                12px 12px 0 var(--orange);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-1deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            max-width: 500px;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        .hero-btn {
+            font-family: 'Bungee', cursive;
+            font-size: 1rem;
+            padding: 1rem 3rem;
+            background: linear-gradient(90deg, var(--orange), var(--pink));
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+        }
+
+        .hero-btn:hover {
+            transform: scale(1.1) rotate(3deg);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.6);
+        }
+
+        /* Decorative elements */
+        .deco-circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 3px solid;
+            animation: spin 20s linear infinite;
+        }
+
+        .deco-circle.a {
+            width: 200px;
+            height: 200px;
+            border-color: var(--yellow);
+            top: 10%;
+            left: 5%;
+        }
+
+        .deco-circle.b {
+            width: 150px;
+            height: 150px;
+            border-color: var(--pink);
+            bottom: 20%;
+            right: 10%;
+            animation-direction: reverse;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Featured */
+        .featured {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            font-family: 'Bungee', cursive;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--yellow);
+            text-shadow: 3px 3px 0 var(--orange);
+        }
+
+        .featured-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .featured-image {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--purple), var(--pink), var(--orange), var(--yellow));
+            background-size: 400% 400%;
+            animation: gradientShift 5s ease infinite;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .featured-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .featured-category {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--yellow);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 1rem;
+        }
+
+        .featured-title {
+            font-family: 'Bungee', cursive;
+            font-size: 1.75rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .featured-excerpt {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .read-more {
+            font-weight: 600;
+            color: var(--pink);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: var(--yellow);
+            gap: 1rem;
+        }
+
+        /* Articles */
+        .articles {
+            padding: 4rem 0;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .article-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .article-card:hover {
+            transform: translateY(-10px) rotate(2deg);
+            border-color: var(--yellow);
+            box-shadow: 0 20px 40px rgba(255, 217, 61, 0.2);
+        }
+
+        .article-image {
+            aspect-ratio: 16/10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .article-card:nth-child(1) .article-image { background: linear-gradient(135deg, var(--purple), var(--blue)); }
+        .article-card:nth-child(2) .article-image { background: linear-gradient(135deg, var(--orange), var(--yellow)); }
+        .article-card:nth-child(3) .article-image { background: linear-gradient(135deg, var(--pink), var(--purple)); }
+        .article-card:nth-child(4) .article-image { background: linear-gradient(135deg, var(--green), var(--blue)); }
+        .article-card:nth-child(5) .article-image { background: linear-gradient(135deg, var(--yellow), var(--green)); }
+        .article-card:nth-child(6) .article-image { background: linear-gradient(135deg, var(--blue), var(--pink)); }
+
+        .article-content {
+            padding: 1.5rem;
+        }
+
+        .article-category {
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--yellow);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-title {
+            font-family: 'Bungee', cursive;
+            font-size: 1rem;
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-date {
+            font-size: 0.75rem;
+            opacity: 0.6;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .newsletter-card {
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            border-radius: 30px;
+            padding: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter-card::before {
+            content: '✧';
+            position: absolute;
+            font-size: 15rem;
+            opacity: 0.1;
+            top: -20%;
+            right: -10%;
+            animation: spin 30s linear infinite;
+        }
+
+        .newsletter-title {
+            font-family: 'Bungee', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-text {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            font-family: inherit;
+            font-size: 0.9rem;
+            border: none;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--dark);
+            outline: none;
+        }
+
+        .newsletter-btn {
+            padding: 1rem 2rem;
+            font-family: 'Bungee', cursive;
+            font-size: 0.85rem;
+            background: var(--yellow);
+            border: none;
+            border-radius: 30px;
+            color: var(--dark);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            transform: scale(1.1);
+            background: var(--orange);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-logo {
+            font-family: 'Bungee', cursive;
+            font-size: 1.25rem;
+            color: var(--pink);
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            font-size: 0.8rem;
+            color: white;
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        .footer-copy {
+            font-size: 0.75rem;
+            opacity: 0.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .featured-card {
+                grid-template-columns: 1fr;
+            }
+            .articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav { display: none; }
+            .deco-circle { display: none; }
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <header>
+        <div class="container">
+            <div class="header-inner">
+                <div class="logo">✧ COSMIC TRIP ✧</div>
+                <nav>
+                    <a href="#">Home</a>
+                    <a href="#">Vibes</a>
+                    <a href="#">Music</a>
+                    <a href="#">Art</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="deco-circle a"></div>
+        <div class="deco-circle b"></div>
+        <span class="hero-badge">✧ FAR OUT ✧</span>
+        <h1 class="hero-title">
+            <span class="wavy">G</span><span class="wavy">R</span><span class="wavy">O</span><span class="wavy">O</span><span class="wavy">V</span><span class="wavy">Y</span>
+        </h1>
+        <p class="hero-subtitle">
+            意識を拡張する、サイケデリックなカルチャーマガジン。<br>
+            色彩と音楽の渦に飛び込もう。
+        </p>
+        <button class="hero-btn">TURN ON ✧</button>
+    </section>
+
+    <section class="featured">
+        <div class="container">
+            <h2 class="section-title">✧ FEATURED ✧</h2>
+            <article class="featured-card">
+                <div class="featured-image">🌈</div>
+                <div class="featured-content">
+                    <span class="featured-category">Culture</span>
+                    <h3 class="featured-title">サマー・オブ・ラブ：<br>1967年の記憶</h3>
+                    <p class="featured-excerpt">
+                        サンフランシスコのヘイト・アシュベリーに集まった若者たち。
+                        愛と平和を求めたあの夏、カウンターカルチャーは頂点を迎えた。
+                    </p>
+                    <a href="#" class="read-more">Trip On →</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="articles">
+        <div class="container">
+            <h2 class="section-title">✧ LATEST VIBES ✧</h2>
+            <div class="articles-grid">
+                <article class="article-card">
+                    <div class="article-image">🎸</div>
+                    <div class="article-content">
+                        <span class="article-category">Music</span>
+                        <h3 class="article-title">サイケデリックロック入門</h3>
+                        <span class="article-date">2024.12.14</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-image">🍄</div>
+                    <div class="article-content">
+                        <span class="article-category">Art</span>
+                        <h3 class="article-title">液体ライトショーの美学</h3>
+                        <span class="article-date">2024.12.12</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-image">☮️</div>
+                    <div class="article-content">
+                        <span class="article-category">History</span>
+                        <h3 class="article-title">ウッドストックの3日間</h3>
+                        <span class="article-date">2024.12.10</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-image">🌸</div>
+                    <div class="article-content">
+                        <span class="article-category">Fashion</span>
+                        <h3 class="article-title">フラワーパワーの装い</h3>
+                        <span class="article-date">2024.12.08</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-image">👁</div>
+                    <div class="article-content">
+                        <span class="article-category">Design</span>
+                        <h3 class="article-title">コンサートポスターの世界</h3>
+                        <span class="article-date">2024.12.05</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-image">🚌</div>
+                    <div class="article-content">
+                        <span class="article-category">Lifestyle</span>
+                        <h3 class="article-title">ヒッピートレイル</h3>
+                        <span class="article-date">2024.12.02</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-card">
+                <h2 class="newsletter-title">TUNE IN</h2>
+                <p class="newsletter-text">コズミックな情報をお届け ✧</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="your@email.com">
+                    <button type="submit" class="newsletter-btn">JOIN</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo">✧ COSMIC TRIP ✧</div>
+            <div class="footer-links">
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+                <a href="#">Instagram</a>
+            </div>
+            <p class="footer-copy">© 2024 COSMIC TRIP ✧ Peace & Love</p>
+        </div>
+    </footer>
+</body>
+</html>

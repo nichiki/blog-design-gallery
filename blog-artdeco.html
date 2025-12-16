@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GILDED AGE — Art Deco Journal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Josefin+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --gold: #d4af37;
+            --gold-light: #f4e4bc;
+            --cream: #f5f1e8;
+            --navy: #1a1a2e;
+            --emerald: #2d5a4a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Josefin Sans', sans-serif;
+            background: var(--black);
+            color: var(--cream);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Decorative elements */
+        .deco-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .deco-diamond {
+            width: 10px;
+            height: 10px;
+            background: var(--gold);
+            transform: rotate(45deg);
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-deco {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--gold);
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+        }
+
+        .logo {
+            text-align: center;
+        }
+
+        .logo-text {
+            font-family: 'Poiret One', cursive;
+            font-size: 2.5rem;
+            color: var(--gold);
+            letter-spacing: 0.3em;
+        }
+
+        .logo-sub {
+            font-size: 0.65rem;
+            letter-spacing: 0.5em;
+            color: var(--gold-light);
+            margin-top: 0.25rem;
+        }
+
+        nav {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            color: var(--cream);
+            text-decoration: none;
+            text-transform: uppercase;
+            position: relative;
+            padding-bottom: 0.25rem;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 8rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 60px;
+            background: var(--gold);
+        }
+
+        .hero-frame {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+        }
+
+        .hero-frame::before,
+        .hero-frame::after {
+            content: '◆';
+            position: absolute;
+            color: var(--gold);
+            font-size: 0.75rem;
+        }
+
+        .hero-frame::before {
+            top: -0.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .hero-frame::after {
+            bottom: -0.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .hero-year {
+            font-size: 0.7rem;
+            letter-spacing: 0.5em;
+            color: var(--gold);
+            margin-bottom: 2rem;
+        }
+
+        .hero-title {
+            font-family: 'Poiret One', cursive;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            color: var(--gold);
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.1em;
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--cream);
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            letter-spacing: 0.1em;
+        }
+
+        .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            font-family: inherit;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            padding: 1rem 3rem;
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hero-btn:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        /* Divider */
+        .divider {
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .divider-inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .divider-line {
+            width: 100px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .divider-icon {
+            color: var(--gold);
+            font-size: 1.5rem;
+        }
+
+        /* Featured */
+        .featured {
+            padding: 4rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-family: 'Poiret One', cursive;
+            font-size: 1.5rem;
+            color: var(--gold);
+            letter-spacing: 0.3em;
+            margin-bottom: 1rem;
+        }
+
+        .featured-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .featured-image {
+            background: linear-gradient(135deg, var(--navy), var(--emerald));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            min-height: 400px;
+        }
+
+        .featured-image::before {
+            content: '';
+            position: absolute;
+            inset: 1.5rem;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .featured-image-icon {
+            font-size: 6rem;
+            opacity: 0.3;
+        }
+
+        .featured-content {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-left: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .featured-category {
+            font-size: 0.65rem;
+            letter-spacing: 0.4em;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .featured-title {
+            font-family: 'Poiret One', cursive;
+            font-size: 2rem;
+            color: var(--gold-light);
+            line-height: 1.4;
+            margin-bottom: 1.5rem;
+        }
+
+        .featured-excerpt {
+            font-size: 0.95rem;
+            font-weight: 300;
+            color: var(--cream);
+            line-height: 2;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+
+        .read-link {
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            color: var(--gold);
+            text-decoration: none;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: gap 0.3s ease;
+        }
+
+        .read-link:hover {
+            gap: 1.5rem;
+        }
+
+        /* Articles */
+        .articles {
+            padding: 4rem 0;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .article-card {
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            margin: -0.5px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .article-card:hover {
+            background: rgba(212, 175, 55, 0.05);
+            border-color: var(--gold);
+        }
+
+        .article-number {
+            font-family: 'Poiret One', cursive;
+            font-size: 2.5rem;
+            color: var(--gold);
+            opacity: 0.3;
+            margin-bottom: 1rem;
+        }
+
+        .article-category {
+            font-size: 0.6rem;
+            letter-spacing: 0.3em;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .article-title {
+            font-family: 'Poiret One', cursive;
+            font-size: 1.25rem;
+            color: var(--gold-light);
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+
+        .article-date {
+            font-size: 0.7rem;
+            color: var(--cream);
+            opacity: 0.5;
+            letter-spacing: 0.1em;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .newsletter-frame {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 3rem;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+        }
+
+        .newsletter-corners {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-color: var(--gold);
+            border-style: solid;
+        }
+
+        .newsletter-corners.tl { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
+        .newsletter-corners.tr { top: -1px; right: -1px; border-width: 1px 1px 0 0; }
+        .newsletter-corners.bl { bottom: -1px; left: -1px; border-width: 0 0 1px 1px; }
+        .newsletter-corners.br { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+
+        .newsletter-title {
+            font-family: 'Poiret One', cursive;
+            font-size: 2rem;
+            color: var(--gold);
+            letter-spacing: 0.2em;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-text {
+            font-size: 0.9rem;
+            font-weight: 300;
+            color: var(--cream);
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            border: 1px solid rgba(212, 175, 55, 0.5);
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            background: transparent;
+            border: none;
+            color: var(--cream);
+            outline: none;
+            letter-spacing: 0.1em;
+        }
+
+        .newsletter-input::placeholder {
+            color: rgba(245, 241, 232, 0.4);
+        }
+
+        .newsletter-btn {
+            padding: 1rem 2rem;
+            font-family: inherit;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            background: var(--gold);
+            border: none;
+            color: var(--black);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            background: var(--gold-light);
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 0;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: 'Poiret One', cursive;
+            font-size: 1.25rem;
+            color: var(--gold);
+            letter-spacing: 0.3em;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            color: var(--cream);
+            text-decoration: none;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        .footer-copy {
+            font-size: 0.65rem;
+            color: var(--cream);
+            opacity: 0.4;
+            letter-spacing: 0.1em;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .featured-card {
+                grid-template-columns: 1fr;
+            }
+            .featured-content {
+                border-left: none;
+                border-top: 1px solid rgba(212, 175, 55, 0.3);
+            }
+            .articles-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-inner {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            .header-deco { display: none; }
+            nav { gap: 1.5rem; }
+            .hero-frame {
+                padding: 2rem;
+            }
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-inner">
+                <div class="header-deco">◆ MCMXXIV ◆</div>
+                <div class="logo">
+                    <div class="logo-text">GILDED AGE</div>
+                    <div class="logo-sub">Art Deco Journal</div>
+                </div>
+                <nav>
+                    <a href="#">Culture</a>
+                    <a href="#">Design</a>
+                    <a href="#">Archive</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-frame">
+                <p class="hero-year">◆ DECEMBER 2024 ◆</p>
+                <h1 class="hero-title">黄金時代の<br>美学を継ぐ</h1>
+                <p class="hero-subtitle">
+                    幾何学模様と贅沢な装飾が織りなす、<br>
+                    1920年代の輝きを現代に。
+                </p>
+                <button class="hero-btn">ENTER</button>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider">
+        <div class="divider-inner">
+            <div class="divider-line"></div>
+            <span class="divider-icon">◆</span>
+            <div class="divider-line"></div>
+        </div>
+    </div>
+
+    <section class="featured">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">◆ FEATURED ◆</h2>
+            </div>
+            <article class="featured-card">
+                <div class="featured-image">
+                    <span class="featured-image-icon">🏛</span>
+                </div>
+                <div class="featured-content">
+                    <span class="featured-category">Architecture</span>
+                    <h3 class="featured-title">クライスラービルに見る<br>アールデコの頂点</h3>
+                    <p class="featured-excerpt">
+                        ニューヨークの空に聳えるステンレスの尖塔。
+                        その装飾的な美しさは、機械時代の楽観主義と
+                        職人技の融合を体現している。
+                    </p>
+                    <a href="#" class="read-link">続きを読む ―――</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="articles">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">◆ LATEST ◆</h2>
+            </div>
+            <div class="articles-grid">
+                <article class="article-card">
+                    <div class="article-number">I</div>
+                    <span class="article-category">Typography</span>
+                    <h3 class="article-title">幾何学書体の系譜</h3>
+                    <span class="article-date">December 14, 1924</span>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-number">II</div>
+                    <span class="article-category">Interior</span>
+                    <h3 class="article-title">金と黒の調和</h3>
+                    <span class="article-date">December 12, 1924</span>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-number">III</div>
+                    <span class="article-category">Fashion</span>
+                    <h3 class="article-title">フラッパーの時代</h3>
+                    <span class="article-date">December 10, 1924</span>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-number">IV</div>
+                    <span class="article-category">Art</span>
+                    <h3 class="article-title">タマラ・ド・レンピッカ</h3>
+                    <span class="article-date">December 8, 1924</span>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-number">V</div>
+                    <span class="article-category">Music</span>
+                    <h3 class="article-title">ジャズエイジの響き</h3>
+                    <span class="article-date">December 5, 1924</span>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-number">VI</div>
+                    <span class="article-category">Cinema</span>
+                    <h3 class="article-title">メトロポリスの未来</h3>
+                    <span class="article-date">December 2, 1924</span>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-frame">
+                <div class="newsletter-corners tl"></div>
+                <div class="newsletter-corners tr"></div>
+                <div class="newsletter-corners bl"></div>
+                <div class="newsletter-corners br"></div>
+                <h2 class="newsletter-title">SUBSCRIBE</h2>
+                <p class="newsletter-text">黄金時代の便りをお届けいたします</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Your Email Address">
+                    <button type="submit" class="newsletter-btn">Join</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo">GILDED AGE</div>
+            <div class="footer-links">
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+                <a href="#">Archive</a>
+            </div>
+            <p class="footer-copy">◆ ANNO DOMINI MCMXXIV ◆</p>
+        </div>
+    </footer>
+</body>
+</html>

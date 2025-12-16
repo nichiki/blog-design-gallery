@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRID — International Design Journal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --red: #ff0000;
+            --gray: #666666;
+            --light-gray: #f0f0f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Archivo', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        header {
+            padding: 1.5rem 0;
+            border-bottom: 3px solid var(--black);
+        }
+
+        .header-inner {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+        }
+
+        .header-left {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4rem;
+            letter-spacing: 0.1em;
+            line-height: 1;
+        }
+
+        .logo span {
+            color: var(--red);
+        }
+
+        nav {
+            display: flex;
+            justify-content: flex-end;
+            gap: 2rem;
+        }
+
+        nav a {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            color: var(--black);
+            text-decoration: none;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--red);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 80vh;
+            border-bottom: 3px solid var(--black);
+        }
+
+        .hero-content {
+            padding: 4rem 4rem 4rem 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-right: 3px solid var(--black);
+        }
+
+        .hero-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 8rem;
+            color: var(--red);
+            line-height: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        .hero-category {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .hero-category::before {
+            content: '';
+            width: 30px;
+            height: 3px;
+            background: var(--red);
+        }
+
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            line-height: 0.95;
+            letter-spacing: 0.02em;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+
+        .hero-excerpt {
+            font-size: 1rem;
+            color: var(--gray);
+            max-width: 400px;
+            margin-bottom: 3rem;
+        }
+
+        .hero-meta {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gray);
+        }
+
+        .hero-visual {
+            background: var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-shape {
+            width: 60%;
+            height: 60%;
+            background: var(--red);
+            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-visual::before {
+            content: 'GRID';
+            position: absolute;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 15rem;
+            color: rgba(255, 255, 255, 0.03);
+            letter-spacing: 0.2em;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-bottom: 3px solid var(--black);
+        }
+
+        .stat {
+            padding: 2rem;
+            text-align: center;
+            border-right: 3px solid var(--black);
+        }
+
+        .stat:last-child {
+            border-right: none;
+        }
+
+        .stat-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            line-height: 1;
+        }
+
+        .stat-number span {
+            color: var(--red);
+        }
+
+        .stat-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-top: 0.5rem;
+        }
+
+        /* Featured Grid */
+        .featured {
+            padding: 4rem 0;
+            border-bottom: 3px solid var(--black);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 0.2em;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: var(--red);
+        }
+
+        .section-link {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            color: var(--black);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2rem;
+        }
+
+        .featured-card {
+            cursor: pointer;
+        }
+
+        .featured-card:nth-child(1) {
+            grid-column: span 6;
+        }
+
+        .featured-card:nth-child(2) {
+            grid-column: span 3;
+        }
+
+        .featured-card:nth-child(3) {
+            grid-column: span 3;
+        }
+
+        .featured-card:nth-child(4) {
+            grid-column: span 4;
+        }
+
+        .featured-card:nth-child(5) {
+            grid-column: span 4;
+        }
+
+        .featured-card:nth-child(6) {
+            grid-column: span 4;
+        }
+
+        .featured-image {
+            aspect-ratio: 4/3;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .featured-card:nth-child(1) .featured-image {
+            aspect-ratio: 16/9;
+        }
+
+        .featured-card:nth-child(1) .featured-image { background: var(--black); }
+        .featured-card:nth-child(2) .featured-image { background: var(--red); }
+        .featured-card:nth-child(3) .featured-image { background: var(--light-gray); }
+        .featured-card:nth-child(4) .featured-image { background: var(--red); }
+        .featured-card:nth-child(5) .featured-image { background: var(--black); }
+        .featured-card:nth-child(6) .featured-image { background: var(--light-gray); }
+
+        .featured-shape {
+            width: 40%;
+            height: 40%;
+            transition: transform 0.4s ease;
+        }
+
+        .featured-card:hover .featured-shape {
+            transform: rotate(45deg) scale(1.1);
+        }
+
+        .featured-card:nth-child(1) .featured-shape {
+            background: var(--red);
+            clip-path: circle(50%);
+        }
+
+        .featured-card:nth-child(2) .featured-shape {
+            background: var(--white);
+            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+        }
+
+        .featured-card:nth-child(3) .featured-shape {
+            background: var(--black);
+        }
+
+        .featured-card:nth-child(4) .featured-shape {
+            background: var(--black);
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+
+        .featured-card:nth-child(5) .featured-shape {
+            background: var(--red);
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%);
+        }
+
+        .featured-card:nth-child(6) .featured-shape {
+            background: var(--red);
+            clip-path: circle(50%);
+        }
+
+        .featured-number {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .featured-card:nth-child(3) .featured-number,
+        .featured-card:nth-child(6) .featured-number {
+            color: rgba(0, 0, 0, 0.2);
+        }
+
+        .featured-category {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 0.5rem;
+        }
+
+        .featured-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: 0.05em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .featured-card:nth-child(1) .featured-title {
+            font-size: 2rem;
+        }
+
+        .featured-card:hover .featured-title {
+            color: var(--red);
+        }
+
+        .featured-date {
+            font-size: 0.7rem;
+            color: var(--gray);
+        }
+
+        /* Newsletter */
+        .newsletter {
+            padding: 6rem 0;
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .newsletter-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .newsletter-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4rem;
+            line-height: 0.95;
+            letter-spacing: 0.05em;
+        }
+
+        .newsletter-title span {
+            color: var(--red);
+        }
+
+        .newsletter-form {
+            display: flex;
+            border: 2px solid var(--white);
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1.25rem 1.5rem;
+            font-family: inherit;
+            font-size: 0.9rem;
+            background: transparent;
+            border: none;
+            color: var(--white);
+            outline: none;
+        }
+
+        .newsletter-input::placeholder {
+            color: var(--gray);
+        }
+
+        .newsletter-btn {
+            padding: 1.25rem 2.5rem;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.1em;
+            background: var(--red);
+            border: none;
+            color: var(--white);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 0;
+            border-top: 3px solid var(--black);
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 0.1em;
+        }
+
+        .footer-logo span {
+            color: var(--red);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            color: var(--black);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .footer-copy {
+            font-size: 0.65rem;
+            color: var(--gray);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+            .hero-content {
+                border-right: none;
+                border-bottom: 3px solid var(--black);
+                padding: 3rem 0;
+            }
+            .hero-visual {
+                min-height: 400px;
+            }
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .stat:nth-child(2) {
+                border-right: none;
+            }
+            .stat:nth-child(1), .stat:nth-child(2) {
+                border-bottom: 3px solid var(--black);
+            }
+            .featured-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .featured-card {
+                grid-column: span 1 !important;
+            }
+            .newsletter-inner {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-inner {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                text-align: center;
+            }
+            .header-left { display: none; }
+            nav { justify-content: center; }
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+            .newsletter-form {
+                flex-direction: column;
+            }
+            .footer-inner {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-inner">
+                <div class="header-left">Issue No. 089 / 2024</div>
+                <div class="logo">GRI<span>D</span></div>
+                <nav>
+                    <a href="#">Design</a>
+                    <a href="#">Type</a>
+                    <a href="#">Archive</a>
+                    <a href="#">About</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content container">
+            <div class="hero-number">01</div>
+            <span class="hero-category">Featured</span>
+            <h1 class="hero-title">The Grid System:<br>Order From Chaos</h1>
+            <p class="hero-excerpt">
+                スイスデザインの核心にある思想。
+                グリッドシステムがいかにして視覚的秩序を生み出し、
+                現代デザインの基盤となったかを探る。
+            </p>
+            <span class="hero-meta">By Max Miedinger • December 2024</span>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-shape"></div>
+        </div>
+    </section>
+
+    <div class="stats-bar">
+        <div class="stat">
+            <div class="stat-number">19<span>20</span></div>
+            <div class="stat-label">Year Founded</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number"><span>12</span></div>
+            <div class="stat-label">Columns</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number">∞</div>
+            <div class="stat-label">Possibilities</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number"><span>1</span></div>
+            <div class="stat-label">Rule: Clarity</div>
+        </div>
+    </div>
+
+    <section class="featured">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Latest</h2>
+                <a href="#" class="section-link">View All →</a>
+            </div>
+            <div class="featured-grid">
+                <article class="featured-card">
+                    <div class="featured-image">
+                        <span class="featured-number">02</span>
+                        <div class="featured-shape"></div>
+                    </div>
+                    <span class="featured-category">Typography</span>
+                    <h3 class="featured-title">Helvetica: The Face of Modern Design</h3>
+                    <span class="featured-date">2024.12.14</span>
+                </article>
+
+                <article class="featured-card">
+                    <div class="featured-image">
+                        <span class="featured-number">03</span>
+                        <div class="featured-shape"></div>
+                    </div>
+                    <span class="featured-category">History</span>
+                    <h3 class="featured-title">Bauhaus Legacy</h3>
+                    <span class="featured-date">2024.12.12</span>
+                </article>
+
+                <article class="featured-card">
+                    <div class="featured-image">
+                        <span class="featured-number">04</span>
+                        <div class="featured-shape"></div>
+                    </div>
+                    <span class="featured-category">Principle</span>
+                    <h3 class="featured-title">Form Follows Function</h3>
+                    <span class="featured-date">2024.12.10</span>
+                </article>
+
+                <article class="featured-card">
+                    <div class="featured-image">
+                        <span class="featured-number">05</span>
+                        <div class="featured-shape"></div>
+                    </div>
+                    <span class="featured-category">Color</span>
+                    <h3 class="featured-title">Red, Black, White</h3>
+                    <span class="featured-date">2024.12.08</span>
+                </article>
+
+                <article class="featured-card">
+                    <div class="featured-image">
+                        <span class="featured-number">06</span>
+                        <div class="featured-shape"></div>
+                    </div>
+                    <span class="featured-category">Layout</span>
+                    <h3 class="featured-title">Asymmetric Balance</h3>
+                    <span class="featured-date">2024.12.05</span>
+                </article>
+
+                <article class="featured-card">
+                    <div class="featured-image">
+                        <span class="featured-number">07</span>
+                        <div class="featured-shape"></div>
+                    </div>
+                    <span class="featured-category">Modern</span>
+                    <h3 class="featured-title">Digital Swiss Style</h3>
+                    <span class="featured-date">2024.12.02</span>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-inner">
+                <h2 class="newsletter-title">JOIN THE<br><span>GRID</span></h2>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="EMAIL ADDRESS">
+                    <button type="submit" class="newsletter-btn">SUBSCRIBE</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-logo">GRI<span>D</span></div>
+                <div class="footer-links">
+                    <a href="#">Twitter</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">RSS</a>
+                </div>
+                <span class="footer-copy">© 2024 GRID Magazine</span>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

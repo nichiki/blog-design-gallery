@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>硯 - SUZURI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Old+Mincho:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 日本の伝統色 */
+            --sumi: #1c1c1c;           /* 墨色 */
+            --ro: #0f0f0f;             /* 呂色（漆黒） */
+            --kinari: #f6f4f0;         /* 生成り */
+            --kitsune: #c5a05a;        /* 狐色 */
+            --shu: #c14e4e;            /* 朱色 */
+            --ai: #264e6c;             /* 藍色 */
+            --uguisu: #6b7e5f;         /* 鶯色 */
+            --nezumi: #7d7d7d;         /* 鼠色 */
+            --hai: #9e9e9e;            /* 灰色 */
+            --usuzumi: #a3a3a3;        /* 薄墨 */
+            --shironeri: #f3f0e7;      /* 白練 */
+            --kuri: #762f07;           /* 栗色 */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Shippori Mincho', serif;
+            background-color: var(--kinari);
+            color: var(--sumi);
+            line-height: 2;
+            overflow-x: hidden;
+        }
+
+        /* 和紙テクスチャオーバーレイ */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* ヘッダー */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(180deg, var(--kinari) 0%, rgba(246, 244, 240, 0) 100%);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-mark {
+            width: 32px;
+            height: 32px;
+            background: var(--sumi);
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+
+        .logo-text {
+            font-family: 'Zen Old Mincho', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.5em;
+            color: var(--sumi);
+        }
+
+        nav {
+            display: flex;
+            gap: 3rem;
+        }
+
+        nav a {
+            font-size: 0.85rem;
+            letter-spacing: 0.3em;
+            color: var(--nezumi);
+            text-decoration: none;
+            position: relative;
+            padding-bottom: 0.25rem;
+            transition: color 0.4s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background: var(--sumi);
+            transition: all 0.4s ease;
+            transform: translateX(-50%);
+        }
+
+        nav a:hover {
+            color: var(--sumi);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* ヒーローセクション */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 8rem 4rem;
+        }
+
+        .hero-decoration {
+            position: absolute;
+            top: 15%;
+            right: 8%;
+            writing-mode: vertical-rl;
+            font-family: 'Zen Old Mincho', serif;
+            font-size: 8rem;
+            font-weight: 700;
+            color: var(--sumi);
+            opacity: 0.03;
+            letter-spacing: 0.2em;
+            user-select: none;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .hero-season {
+            display: inline-block;
+            font-size: 0.75rem;
+            letter-spacing: 0.5em;
+            color: var(--nezumi);
+            border: 1px solid var(--hai);
+            padding: 0.5rem 1.5rem;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.3s forwards;
+        }
+
+        .hero-title {
+            font-family: 'Zen Old Mincho', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 400;
+            line-height: 1.6;
+            letter-spacing: 0.15em;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.6s forwards;
+        }
+
+        .hero-title em {
+            font-style: normal;
+            color: var(--shu);
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--nezumi);
+            letter-spacing: 0.2em;
+            line-height: 2.2;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.9s forwards;
+        }
+
+        .hero-line {
+            width: 1px;
+            height: 80px;
+            background: linear-gradient(180deg, var(--sumi), transparent);
+            margin: 4rem auto 0;
+            opacity: 0;
+            animation: fadeIn 1s ease 1.2s forwards, breathe 3s ease-in-out infinite 1.2s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes breathe {
+            0%, 100% { height: 80px; }
+            50% { height: 100px; }
+        }
+
+        /* 特集セクション */
+        .featured {
+            padding: 8rem 4rem;
+            background: var(--shironeri);
+            position: relative;
+        }
+
+        .featured::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--hai), transparent);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 5rem;
+        }
+
+        .section-number {
+            font-family: 'Zen Old Mincho', serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: var(--usuzumi);
+        }
+
+        .section-title {
+            font-family: 'Zen Old Mincho', serif;
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 0.4em;
+            color: var(--sumi);
+        }
+
+        .section-line {
+            flex: 1;
+            height: 1px;
+            background: var(--hai);
+        }
+
+        .featured-article {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .featured-image {
+            aspect-ratio: 4/5;
+            background: linear-gradient(135deg, var(--ai) 0%, var(--sumi) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
+            opacity: 0.1;
+            mix-blend-mode: overlay;
+        }
+
+        .featured-image::after {
+            content: '一';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Zen Old Mincho', serif;
+            font-size: 6rem;
+            color: rgba(255, 255, 255, 0.1);
+        }
+
+        .featured-frame {
+            position: absolute;
+            inset: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .featured-content {
+            padding: 2rem 0;
+        }
+
+        .featured-category {
+            display: inline-block;
+            font-size: 0.7rem;
+            letter-spacing: 0.4em;
+            color: var(--shu);
+            margin-bottom: 2rem;
+        }
+
+        .featured-title {
+            font-family: 'Zen Old Mincho', serif;
+            font-size: 2rem;
+            font-weight: 400;
+            line-height: 1.8;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+            color: var(--sumi);
+        }
+
+        .featured-excerpt {
+            font-size: 0.95rem;
+            color: var(--nezumi);
+            line-height: 2.4;
+            margin-bottom: 3rem;
+        }
+
+        .featured-meta {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            font-size: 0.8rem;
+            color: var(--usuzumi);
+            letter-spacing: 0.1em;
+        }
+
+        .read-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.8rem;
+            letter-spacing: 0.3em;
+            color: var(--sumi);
+            text-decoration: none;
+            margin-top: 3rem;
+            transition: gap 0.4s ease;
+        }
+
+        .read-link:hover {
+            gap: 1.5rem;
+        }
+
+        .read-link::after {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: var(--sumi);
+            transition: width 0.4s ease;
+        }
+
+        .read-link:hover::after {
+            width: 60px;
+        }
+
+        /* 記事一覧 */
+        .articles {
+            padding: 8rem 4rem;
+            background: var(--kinari);
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem 4rem;
+        }
+
+        .article-card {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .article-image {
+            aspect-ratio: 1/1;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-image-inner {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s ease;
+        }
+
+        .article-card:hover .article-image-inner {
+            transform: scale(1.05);
+        }
+
+        /* 各カードに異なる日本の色 */
+        .article-card:nth-child(1) .article-image-inner {
+            background: linear-gradient(145deg, var(--uguisu), #3d4a35);
+        }
+        .article-card:nth-child(2) .article-image-inner {
+            background: linear-gradient(145deg, var(--kitsune), #8a6d3a);
+        }
+        .article-card:nth-child(3) .article-image-inner {
+            background: linear-gradient(145deg, var(--shu), #8a2f2f);
+        }
+        .article-card:nth-child(4) .article-image-inner {
+            background: linear-gradient(145deg, var(--ai), #1a3347);
+        }
+        .article-card:nth-child(5) .article-image-inner {
+            background: linear-gradient(145deg, var(--kuri), #4a1f04);
+        }
+        .article-card:nth-child(6) .article-image-inner {
+            background: linear-gradient(145deg, var(--nezumi), #4a4a4a);
+        }
+
+        .article-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
+            opacity: 0.15;
+            mix-blend-mode: overlay;
+            z-index: 1;
+        }
+
+        .article-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 2;
+            transition: inset 0.4s ease;
+        }
+
+        .article-card:hover .article-image::after {
+            inset: 0.75rem;
+        }
+
+        .article-number {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            font-family: 'Zen Old Mincho', serif;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.1em;
+            z-index: 3;
+        }
+
+        .article-category {
+            font-size: 0.65rem;
+            letter-spacing: 0.4em;
+            color: var(--usuzumi);
+            margin-bottom: 0.75rem;
+        }
+
+        .article-title {
+            font-family: 'Zen Old Mincho', serif;
+            font-size: 1.1rem;
+            font-weight: 400;
+            line-height: 1.8;
+            letter-spacing: 0.05em;
+            color: var(--sumi);
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .article-card:hover .article-title {
+            color: var(--shu);
+        }
+
+        .article-date {
+            font-size: 0.75rem;
+            color: var(--hai);
+            letter-spacing: 0.1em;
+        }
+
+        /* 縦書きセクション */
+        .vertical-section {
+            padding: 10rem 4rem;
+            background: var(--sumi);
+            color: var(--kinari);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vertical-bg-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Zen Old Mincho', serif;
+            font-size: 20rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.02);
+            white-space: nowrap;
+            user-select: none;
+        }
+
+        .vertical-content {
+            display: flex;
+            justify-content: center;
+            gap: 8rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .vertical-text {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-family: 'Zen Old Mincho', serif;
+            font-size: 1.2rem;
+            line-height: 3;
+            letter-spacing: 0.3em;
+            color: var(--shironeri);
+        }
+
+        .vertical-text em {
+            font-style: normal;
+            color: var(--kitsune);
+        }
+
+        .vertical-decoration {
+            writing-mode: vertical-rl;
+            font-family: 'Zen Old Mincho', serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.5em;
+            color: var(--nezumi);
+            padding-top: 2rem;
+            border-top: 1px solid var(--nezumi);
+        }
+
+        /* ニュースレター */
+        .newsletter {
+            padding: 8rem 4rem;
+            background: var(--shironeri);
+            text-align: center;
+        }
+
+        .newsletter-inner {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-icon {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto 2rem;
+            background: var(--sumi);
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+
+        .newsletter-title {
+            font-family: 'Zen Old Mincho', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            letter-spacing: 0.3em;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-text {
+            font-size: 0.9rem;
+            color: var(--nezumi);
+            letter-spacing: 0.1em;
+            margin-bottom: 3rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0;
+            border: 1px solid var(--hai);
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1.25rem 1.5rem;
+            font-family: 'Shippori Mincho', serif;
+            font-size: 0.9rem;
+            background: transparent;
+            border: none;
+            color: var(--sumi);
+            outline: none;
+            letter-spacing: 0.1em;
+        }
+
+        .newsletter-input::placeholder {
+            color: var(--hai);
+        }
+
+        .newsletter-btn {
+            padding: 1.25rem 2.5rem;
+            font-family: 'Shippori Mincho', serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            background: var(--sumi);
+            border: none;
+            color: var(--kinari);
+            cursor: pointer;
+            transition: background 0.4s ease;
+        }
+
+        .newsletter-btn:hover {
+            background: var(--shu);
+        }
+
+        /* フッター */
+        footer {
+            padding: 4rem;
+            background: var(--kinari);
+            border-top: 1px solid var(--hai);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-family: 'Zen Old Mincho', serif;
+            font-size: 1rem;
+            letter-spacing: 0.5em;
+            color: var(--sumi);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .footer-links a {
+            font-size: 0.8rem;
+            color: var(--nezumi);
+            text-decoration: none;
+            letter-spacing: 0.2em;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--sumi);
+        }
+
+        .footer-copy {
+            font-size: 0.7rem;
+            color: var(--hai);
+            letter-spacing: 0.1em;
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 1024px) {
+            .featured-article {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+
+            .articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .vertical-content {
+                gap: 4rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1.5rem 2rem;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .hero {
+                padding: 6rem 2rem;
+            }
+
+            .hero-decoration {
+                display: none;
+            }
+
+            .featured, .articles, .newsletter {
+                padding: 5rem 2rem;
+            }
+
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .vertical-section {
+                padding: 6rem 2rem;
+            }
+
+            .vertical-content {
+                flex-direction: column;
+                align-items: center;
+                gap: 3rem;
+            }
+
+            .vertical-text {
+                writing-mode: horizontal-tb;
+                text-align: center;
+                line-height: 2.5;
+            }
+
+            .vertical-decoration {
+                writing-mode: horizontal-tb;
+                border-top: none;
+                border-left: 1px solid var(--nezumi);
+                padding-top: 0;
+                padding-left: 1rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .newsletter-btn {
+                width: 100%;
+            }
+        }
+
+        /* スクロールアニメーション */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <div class="logo-mark"></div>
+            <span class="logo-text">硯</span>
+        </div>
+        <nav>
+            <a href="#">随筆</a>
+            <a href="#">暮らし</a>
+            <a href="#">旅路</a>
+            <a href="#">書架</a>
+            <a href="#">便り</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-decoration">余白</div>
+        <div class="hero-content">
+            <span class="hero-season">師走・二〇二四</span>
+            <h1 class="hero-title">
+                静けさのなかに<br>
+                <em>美</em>を見出す
+            </h1>
+            <p class="hero-subtitle">
+                日々の暮らしに息づく、ささやかな発見と思索。<br>
+                時の流れに身を委ね、言葉を紡ぐ。
+            </p>
+            <div class="hero-line"></div>
+        </div>
+    </section>
+
+    <section class="featured">
+        <div class="section-header">
+            <span class="section-number">壱</span>
+            <h2 class="section-title">特集</h2>
+            <div class="section-line"></div>
+        </div>
+        <article class="featured-article fade-in">
+            <div class="featured-image">
+                <div class="featured-frame"></div>
+            </div>
+            <div class="featured-content">
+                <span class="featured-category">随筆</span>
+                <h3 class="featured-title">
+                    余白の哲学<br>
+                    何もないことの豊かさ
+                </h3>
+                <p class="featured-excerpt">
+                    空間を埋め尽くすことが豊かさの象徴とされる時代にあって、
+                    あえて何も置かないという選択。そこには日本人が古来より
+                    大切にしてきた美意識が息づいている。本稿では、余白が
+                    生み出す静謐な空間と、その精神性について考察する。
+                </p>
+                <div class="featured-meta">
+                    <span>二〇二四年 師走十五日</span>
+                    <span>・</span>
+                    <span>約十二分</span>
+                </div>
+                <a href="#" class="read-link">続きを読む</a>
+            </div>
+        </article>
+    </section>
+
+    <section class="articles">
+        <div class="section-header">
+            <span class="section-number">弐</span>
+            <h2 class="section-title">最新の記事</h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="articles-grid">
+            <article class="article-card fade-in">
+                <div class="article-image">
+                    <div class="article-image-inner"></div>
+                    <span class="article-number">〇一</span>
+                </div>
+                <span class="article-category">暮らし</span>
+                <h3 class="article-title">茶の湯に学ぶ<br>一期一会の心得</h3>
+                <span class="article-date">師走十四日</span>
+            </article>
+
+            <article class="article-card fade-in">
+                <div class="article-image">
+                    <div class="article-image-inner"></div>
+                    <span class="article-number">〇二</span>
+                </div>
+                <span class="article-category">旅路</span>
+                <h3 class="article-title">京の路地裏を歩く<br>冬の朝の静寂</h3>
+                <span class="article-date">師走十二日</span>
+            </article>
+
+            <article class="article-card fade-in">
+                <div class="article-image">
+                    <div class="article-image-inner"></div>
+                    <span class="article-number">〇三</span>
+                </div>
+                <span class="article-category">随筆</span>
+                <h3 class="article-title">朱色の記憶<br>色が呼び起こすもの</h3>
+                <span class="article-date">師走十日</span>
+            </article>
+
+            <article class="article-card fade-in">
+                <div class="article-image">
+                    <div class="article-image-inner"></div>
+                    <span class="article-number">〇四</span>
+                </div>
+                <span class="article-category">書架</span>
+                <h3 class="article-title">古典に触れる<br>枕草子の現代性</h3>
+                <span class="article-date">師走八日</span>
+            </article>
+
+            <article class="article-card fade-in">
+                <div class="article-image">
+                    <div class="article-image-inner"></div>
+                    <span class="article-number">〇五</span>
+                </div>
+                <span class="article-category">暮らし</span>
+                <h3 class="article-title">手仕事の温もり<br>漆器のある食卓</h3>
+                <span class="article-date">師走五日</span>
+            </article>
+
+            <article class="article-card fade-in">
+                <div class="article-image">
+                    <div class="article-image-inner"></div>
+                    <span class="article-number">〇六</span>
+                </div>
+                <span class="article-category">随筆</span>
+                <h3 class="article-title">墨の濃淡に宿る<br>書の精神</h3>
+                <span class="article-date">師走二日</span>
+            </article>
+        </div>
+    </section>
+
+    <section class="vertical-section">
+        <div class="vertical-bg-text">言葉</div>
+        <div class="vertical-content">
+            <p class="vertical-text">
+                言葉は<em>時</em>を超え<br>
+                心から心へと<br>
+                静かに伝わりゆく
+            </p>
+            <div class="vertical-decoration">硯 SUZURI</div>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <div class="newsletter-inner">
+            <div class="newsletter-icon"></div>
+            <h2 class="newsletter-title">便りを届ける</h2>
+            <p class="newsletter-text">
+                月に二度、季節の便りとともに<br>
+                新しい記事をお届けいたします。
+            </p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="電子郵便をご記入ください">
+                <button type="submit" class="newsletter-btn">登録</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <span class="footer-logo">硯</span>
+            <div class="footer-links">
+                <a href="#">このサイトについて</a>
+                <a href="#">執筆者</a>
+                <a href="#">お問い合わせ</a>
+            </div>
+            <span class="footer-copy">令和六年 硯</span>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll animation
+        const fadeElements = document.querySelectorAll('.fade-in');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        fadeElements.forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

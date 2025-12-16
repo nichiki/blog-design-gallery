@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Athenaeum — A Journal of Letters</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --parchment: #f4f1eb;
+            --cream: #faf8f3;
+            --sepia: #8b7355;
+            --brown: #5c4a3d;
+            --dark-brown: #3d3027;
+            --gold: #c9a227;
+            --burgundy: #722f37;
+            --ink: #2c2416;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'EB Garamond', serif;
+            background: var(--parchment);
+            color: var(--ink);
+            line-height: 1.9;
+        }
+
+        /* Paper texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        /* Header */
+        header {
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--sepia);
+            position: relative;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-size: 0.75rem;
+            color: var(--sepia);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .logo {
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .logo-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            color: var(--dark-brown);
+        }
+
+        .logo-subtitle {
+            font-style: italic;
+            font-size: 0.9rem;
+            color: var(--sepia);
+            letter-spacing: 0.3em;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--sepia);
+        }
+
+        nav a {
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            color: var(--brown);
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--burgundy);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 6rem 0;
+            text-align: center;
+            border-bottom: 1px solid var(--sepia);
+            position: relative;
+        }
+
+        .hero::before,
+        .hero::after {
+            content: '❧';
+            position: absolute;
+            font-size: 1.5rem;
+            color: var(--sepia);
+            opacity: 0.5;
+        }
+
+        .hero::before {
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .hero::after {
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) rotate(180deg);
+        }
+
+        .hero-category {
+            font-size: 0.7rem;
+            letter-spacing: 0.4em;
+            color: var(--burgundy);
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+        }
+
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+            line-height: 1.3;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: var(--dark-brown);
+        }
+
+        .hero-title em {
+            font-style: italic;
+        }
+
+        .hero-excerpt {
+            font-size: 1.15rem;
+            font-style: italic;
+            color: var(--sepia);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .hero-meta {
+            font-size: 0.8rem;
+            color: var(--sepia);
+            letter-spacing: 0.1em;
+        }
+
+        .hero-meta span {
+            margin: 0 0.5rem;
+        }
+
+        /* Quote Section */
+        .quote-section {
+            padding: 5rem 0;
+            background: var(--cream);
+            text-align: center;
+            border-bottom: 1px solid var(--sepia);
+        }
+
+        .quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-style: italic;
+            color: var(--brown);
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+            line-height: 1.6;
+        }
+
+        .quote-author {
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            color: var(--sepia);
+            text-transform: uppercase;
+        }
+
+        /* Articles */
+        .articles {
+            padding: 5rem 0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .section-line {
+            flex: 1;
+            height: 1px;
+            background: var(--sepia);
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 0.3em;
+            color: var(--sepia);
+            text-transform: uppercase;
+        }
+
+        .articles-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .article-item {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 3rem;
+            padding: 3rem 0;
+            border-bottom: 1px solid rgba(139, 115, 85, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .article-item:hover {
+            background: var(--cream);
+            padding-left: 2rem;
+            padding-right: 2rem;
+            margin: 0 -2rem;
+        }
+
+        .article-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 300;
+            color: var(--sepia);
+            opacity: 0.4;
+            line-height: 1;
+        }
+
+        .article-content {
+            padding-top: 0.5rem;
+        }
+
+        .article-category {
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
+            color: var(--burgundy);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .article-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 400;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+            color: var(--dark-brown);
+            transition: color 0.3s ease;
+        }
+
+        .article-item:hover .article-title {
+            color: var(--burgundy);
+        }
+
+        .article-excerpt {
+            font-size: 1rem;
+            color: var(--sepia);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .article-meta {
+            font-size: 0.75rem;
+            color: var(--sepia);
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+        }
+
+        /* Sidebar Articles */
+        .sidebar-section {
+            padding: 5rem 0;
+            background: var(--cream);
+            border-top: 1px solid var(--sepia);
+            border-bottom: 1px solid var(--sepia);
+        }
+
+        .sidebar-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+        }
+
+        .sidebar-card {
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .sidebar-icon {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.6;
+        }
+
+        .sidebar-category {
+            font-size: 0.6rem;
+            letter-spacing: 0.3em;
+            color: var(--burgundy);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--dark-brown);
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .sidebar-card:hover .sidebar-title {
+            color: var(--burgundy);
+        }
+
+        .sidebar-date {
+            font-size: 0.7rem;
+            color: var(--sepia);
+            letter-spacing: 0.1em;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .newsletter-ornament {
+            font-size: 1.5rem;
+            color: var(--sepia);
+            margin-bottom: 2rem;
+            opacity: 0.5;
+        }
+
+        .newsletter-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 400;
+            color: var(--dark-brown);
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-text {
+            font-style: italic;
+            color: var(--sepia);
+            margin-bottom: 2.5rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 450px;
+            margin: 0 auto;
+            border: 1px solid var(--sepia);
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            font-family: 'EB Garamond', serif;
+            font-size: 1rem;
+            background: transparent;
+            border: none;
+            color: var(--ink);
+            outline: none;
+        }
+
+        .newsletter-input::placeholder {
+            color: var(--sepia);
+            font-style: italic;
+        }
+
+        .newsletter-btn {
+            padding: 1rem 2rem;
+            font-family: 'EB Garamond', serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            background: var(--dark-brown);
+            border: none;
+            color: var(--parchment);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            background: var(--burgundy);
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 0;
+            border-top: 1px solid var(--sepia);
+            text-align: center;
+        }
+
+        .footer-ornament {
+            font-size: 1rem;
+            color: var(--sepia);
+            margin-bottom: 1.5rem;
+            opacity: 0.5;
+        }
+
+        .footer-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            letter-spacing: 0.2em;
+            color: var(--dark-brown);
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links a {
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            color: var(--sepia);
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--burgundy);
+        }
+
+        .footer-copy {
+            font-size: 0.7rem;
+            color: var(--sepia);
+            letter-spacing: 0.1em;
+            font-style: italic;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+            nav {
+                flex-wrap: wrap;
+                gap: 1rem 2rem;
+            }
+            .article-item {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .article-number {
+                font-size: 2rem;
+            }
+            .sidebar-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <span>Est. MDCCCXLVII</span>
+                <span>Vol. CLXXVII • Winter 2024</span>
+            </div>
+            <div class="logo">
+                <div class="logo-text">THE ATHENAEUM</div>
+                <div class="logo-subtitle">A Journal of Letters & Ideas</div>
+            </div>
+            <nav>
+                <a href="#">Essays</a>
+                <a href="#">Literature</a>
+                <a href="#">Philosophy</a>
+                <a href="#">History</a>
+                <a href="#">Archives</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <span class="hero-category">Featured Essay</span>
+            <h1 class="hero-title">On the <em>Sublime</em> Nature of Solitude: A Meditation</h1>
+            <p class="hero-excerpt">
+                "In the quietude of the study, among the whispered conversations of a thousand books,
+                one discovers not loneliness, but a profound communion with the ages."
+            </p>
+            <div class="hero-meta">
+                <span>By Professor Edmund Blackwood</span>
+                <span>•</span>
+                <span>December 1847</span>
+                <span>•</span>
+                <span>Reading Time: 18 minutes</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="quote-section">
+        <div class="container">
+            <blockquote class="quote">
+                "The mind is not a vessel to be filled, but a fire to be kindled."
+            </blockquote>
+            <cite class="quote-author">— Plutarch</cite>
+        </div>
+    </section>
+
+    <section class="articles">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-line"></div>
+                <h2 class="section-title">Recent Dispatches</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="articles-list">
+                <article class="article-item">
+                    <div class="article-number">I</div>
+                    <div class="article-content">
+                        <span class="article-category">Philosophy</span>
+                        <h3 class="article-title">The Cartesian Theatre Revisited: Consciousness in the Modern Age</h3>
+                        <p class="article-excerpt">A contemplation upon the nature of mind and the persistent illusion of the unified self, examined through both classical and contemporary lenses.</p>
+                        <span class="article-meta">Dr. Helena Ashworth • December 14, 1847</span>
+                    </div>
+                </article>
+
+                <article class="article-item">
+                    <div class="article-number">II</div>
+                    <div class="article-content">
+                        <span class="article-category">Literature</span>
+                        <h3 class="article-title">The Gothic Imagination: Terror and the Romantic Sublime</h3>
+                        <p class="article-excerpt">How the shadows of ruined abbeys and moonlit moors shaped a literary tradition that continues to haunt our collective dreams.</p>
+                        <span class="article-meta">Prof. Sebastian Crane • December 12, 1847</span>
+                    </div>
+                </article>
+
+                <article class="article-item">
+                    <div class="article-number">III</div>
+                    <div class="article-content">
+                        <span class="article-category">History</span>
+                        <h3 class="article-title">The Library of Alexandria: What Was Lost</h3>
+                        <p class="article-excerpt">A scholarly examination of the legendary repository and the incalculable treasures that perished in flame and neglect.</p>
+                        <span class="article-meta">Dr. Marcus Aurelius Webb • December 10, 1847</span>
+                    </div>
+                </article>
+
+                <article class="article-item">
+                    <div class="article-number">IV</div>
+                    <div class="article-content">
+                        <span class="article-category">Essay</span>
+                        <h3 class="article-title">On the Art of Correspondence: Letters in an Age of Haste</h3>
+                        <p class="article-excerpt">The dying art of the handwritten letter and what we lose when we sacrifice deliberation for expedience.</p>
+                        <span class="article-meta">Lady Charlotte Pemberton • December 8, 1847</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="sidebar-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-line"></div>
+                <h2 class="section-title">From the Archives</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="sidebar-grid">
+                <article class="sidebar-card">
+                    <div class="sidebar-icon">📜</div>
+                    <span class="sidebar-category">Classical Studies</span>
+                    <h3 class="sidebar-title">The Stoic's Guide to Tranquility</h3>
+                    <span class="sidebar-date">Autumn 1842</span>
+                </article>
+
+                <article class="sidebar-card">
+                    <div class="sidebar-icon">🕯</div>
+                    <span class="sidebar-category">Philosophy</span>
+                    <h3 class="sidebar-title">Candlelight Meditations on Mortality</h3>
+                    <span class="sidebar-date">Winter 1839</span>
+                </article>
+
+                <article class="sidebar-card">
+                    <div class="sidebar-icon">🪶</div>
+                    <span class="sidebar-category">Poetry</span>
+                    <h3 class="sidebar-title">Verses from a Distant Shore</h3>
+                    <span class="sidebar-date">Spring 1835</span>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-ornament">❦</div>
+            <h2 class="newsletter-title">Subscribe to Our Dispatches</h2>
+            <p class="newsletter-text">Receive our weekly collection of essays and literary musings.</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Your correspondence address...">
+                <button type="submit" class="newsletter-btn">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-ornament">❧</div>
+            <div class="footer-logo">THE ATHENAEUM</div>
+            <div class="footer-links">
+                <a href="#">About</a>
+                <a href="#">Contributors</a>
+                <a href="#">Contact</a>
+                <a href="#">Archives</a>
+            </div>
+            <p class="footer-copy">Established in the Year of Our Lord 1847 • London</p>
+        </div>
+    </footer>
+</body>
+</html>

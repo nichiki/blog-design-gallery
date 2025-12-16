@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ＤＲＥＡＭ ＷＡＶＥ ドリーム</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink: #ff71ce;
+            --purple: #9b59b6;
+            --blue: #01cdfe;
+            --mint: #05ffa1;
+            --yellow: #fffb96;
+            --dark: #1a1a2e;
+            --darker: #0f0f1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            background: linear-gradient(180deg, var(--darker) 0%, #1a0a2e 50%, #2d1b4e 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Grid Background */
+        .grid-bg {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40vh;
+            background:
+                linear-gradient(180deg, transparent 0%, var(--purple) 100%),
+                repeating-linear-gradient(90deg, var(--pink) 0px, var(--pink) 1px, transparent 1px, transparent 60px),
+                repeating-linear-gradient(0deg, var(--pink) 0px, var(--pink) 1px, transparent 1px, transparent 60px);
+            background-size: 100% 100%, 60px 60px, 60px 60px;
+            transform: perspective(500px) rotateX(60deg);
+            transform-origin: center bottom;
+            opacity: 0.3;
+            z-index: 0;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { background-position: 0 0, 0 0, 0 0; }
+            100% { background-position: 0 0, 0 60px, 0 60px; }
+        }
+
+        /* Sun */
+        .sun {
+            position: fixed;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(180deg, var(--yellow) 0%, var(--pink) 50%, var(--purple) 100%);
+            border-radius: 50%;
+            z-index: 0;
+            opacity: 0.8;
+            filter: blur(2px);
+        }
+
+        .sun::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0px,
+                transparent 8px,
+                var(--darker) 8px,
+                var(--darker) 16px
+            );
+            border-radius: 50%;
+            clip-path: inset(50% 0 0 0);
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(180deg, rgba(15, 15, 26, 0.9) 0%, transparent 100%);
+        }
+
+        .logo {
+            font-family: 'Righteous', cursive;
+            font-size: 1.5rem;
+            background: linear-gradient(90deg, var(--pink), var(--blue), var(--mint));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px var(--pink);
+            letter-spacing: 0.1em;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            font-size: 0.85rem;
+            color: var(--blue);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 10px var(--blue);
+        }
+
+        nav a:hover {
+            color: var(--pink);
+            text-shadow: 0 0 20px var(--pink);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 6rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-tag {
+            font-size: 0.8rem;
+            color: var(--mint);
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 20px var(--mint);
+            animation: flicker 3s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 90%, 100% { opacity: 1; }
+            91% { opacity: 0.8; }
+            92% { opacity: 1; }
+            93% { opacity: 0.9; }
+        }
+
+        .hero-title {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(3rem, 12vw, 8rem);
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            background: linear-gradient(180deg, var(--pink) 0%, var(--purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 30px var(--pink));
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px var(--pink)); }
+            to { filter: drop-shadow(0 0 40px var(--purple)); }
+        }
+
+        .hero-title-jp {
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: var(--blue);
+            letter-spacing: 0.5em;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 30px var(--blue);
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 500px;
+            line-height: 2;
+            margin-bottom: 3rem;
+        }
+
+        .hero-btn {
+            font-family: 'Righteous', cursive;
+            font-size: 1rem;
+            padding: 1rem 3rem;
+            background: linear-gradient(90deg, var(--pink), var(--purple));
+            border: none;
+            color: white;
+            cursor: pointer;
+            letter-spacing: 0.2em;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .hero-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px var(--pink);
+        }
+
+        .hero-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine 2s infinite;
+        }
+
+        @keyframes shine {
+            100% { left: 100%; }
+        }
+
+        /* Featured */
+        .featured {
+            padding: 6rem 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-family: 'Righteous', cursive;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            color: var(--mint);
+            text-shadow: 0 0 30px var(--mint);
+            letter-spacing: 0.3em;
+        }
+
+        .featured-card {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--pink);
+            padding: 2rem;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .featured-card::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, var(--pink), var(--blue), var(--mint), var(--pink));
+            z-index: -1;
+            filter: blur(20px);
+            opacity: 0.5;
+        }
+
+        .featured-image {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-image::before {
+            content: '夢';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 8rem;
+            color: rgba(255, 255, 255, 0.1);
+        }
+
+        .featured-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0px,
+                transparent 2px,
+                rgba(0,0,0,0.1) 2px,
+                rgba(0,0,0,0.1) 4px
+            );
+        }
+
+        .featured-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .featured-category {
+            font-size: 0.75rem;
+            color: var(--mint);
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            margin-bottom: 1rem;
+        }
+
+        .featured-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--pink);
+            text-shadow: 0 0 20px var(--pink);
+        }
+
+        .featured-excerpt {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 2;
+            margin-bottom: 2rem;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--blue);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: var(--pink);
+            gap: 1rem;
+        }
+
+        /* Articles */
+        .articles {
+            padding: 6rem 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .article-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 113, 206, 0.3);
+            padding: 1.5rem;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .article-card:hover {
+            border-color: var(--pink);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 113, 206, 0.2);
+        }
+
+        .article-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--pink), var(--blue));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .article-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .article-image {
+            aspect-ratio: 16/9;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-card:nth-child(1) .article-image { background: linear-gradient(135deg, #ff71ce, #9b59b6); }
+        .article-card:nth-child(2) .article-image { background: linear-gradient(135deg, #01cdfe, #05ffa1); }
+        .article-card:nth-child(3) .article-image { background: linear-gradient(135deg, #9b59b6, #01cdfe); }
+        .article-card:nth-child(4) .article-image { background: linear-gradient(135deg, #05ffa1, #fffb96); }
+        .article-card:nth-child(5) .article-image { background: linear-gradient(135deg, #fffb96, #ff71ce); }
+        .article-card:nth-child(6) .article-image { background: linear-gradient(135deg, #01cdfe, #9b59b6); }
+
+        .article-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0px,
+                transparent 2px,
+                rgba(0,0,0,0.15) 2px,
+                rgba(0,0,0,0.15) 4px
+            );
+        }
+
+        .article-number {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            font-family: 'Righteous', cursive;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .article-category {
+            font-size: 0.65rem;
+            color: var(--mint);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1rem;
+            color: white;
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .article-date {
+            font-size: 0.75rem;
+            color: var(--purple);
+        }
+
+        /* Newsletter */
+        .newsletter {
+            padding: 8rem 3rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .newsletter-title {
+            font-family: 'Righteous', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--pink), var(--blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .newsletter-text {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--purple);
+            color: white;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-input:focus {
+            border-color: var(--pink);
+            box-shadow: 0 0 20px rgba(255, 113, 206, 0.3);
+        }
+
+        .newsletter-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .newsletter-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(90deg, var(--blue), var(--mint));
+            border: none;
+            color: var(--darker);
+            font-family: 'Righteous', cursive;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px var(--mint);
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid rgba(255, 113, 206, 0.2);
+        }
+
+        .footer-logo {
+            font-family: 'Righteous', cursive;
+            font-size: 1.2rem;
+            color: var(--pink);
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--blue);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--pink);
+        }
+
+        .footer-copy {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .featured-card {
+                grid-template-columns: 1fr;
+            }
+            .articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 1.5rem;
+            }
+            nav { display: none; }
+            .featured, .articles, .newsletter {
+                padding: 4rem 1.5rem;
+            }
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sun"></div>
+    <div class="grid-bg"></div>
+
+    <header>
+        <div class="logo">ＤＲＥＡＭ ＷＡＶＥ</div>
+        <nav>
+            <a href="#">ホーム</a>
+            <a href="#">アーカイブ</a>
+            <a href="#">アバウト</a>
+            <a href="#">コンタクト</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <p class="hero-tag">Ａｅｓｔｈｅｔｉｃ Ｂｌｏｇ</p>
+        <h1 class="hero-title">ＤＲＥＡＭ</h1>
+        <p class="hero-title-jp">ドリーム ウェーブ</p>
+        <p class="hero-subtitle">
+            ネオンの光が照らす電子の海へ。<br>
+            レトロフューチャーな世界観で綴る、デジタルカルチャーマガジン。
+        </p>
+        <button class="hero-btn">ＥＮＴＥＲ</button>
+    </section>
+
+    <section class="featured">
+        <h2 class="section-title">ＦＥＡＴＵＲＥＤ</h2>
+        <article class="featured-card">
+            <div class="featured-image"></div>
+            <div class="featured-content">
+                <span class="featured-category">Ｃｕｌｔｕｒｅ</span>
+                <h3 class="featured-title">ヴェイパーウェーブの美学と現代への影響</h3>
+                <p class="featured-excerpt">
+                    80年代への郷愁と消費社会への批評を内包した音楽ジャンルは、
+                    いかにして視覚芸術やファッションに影響を与えたのか。
+                    電子の夢が紡ぐ、ノスタルジックな未来を探る。
+                </p>
+                <a href="#" class="read-more">続きを読む →</a>
+            </div>
+        </article>
+    </section>
+
+    <section class="articles">
+        <h2 class="section-title">ＬＡＴＥＳＴ</h2>
+        <div class="articles-grid">
+            <article class="article-card">
+                <div class="article-image">
+                    <span class="article-number">001</span>
+                </div>
+                <span class="article-category">Ｍｕｓｉｃ</span>
+                <h3 class="article-title">シンセウェーブの復権</h3>
+                <span class="article-date">2024.12.14</span>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image">
+                    <span class="article-number">002</span>
+                </div>
+                <span class="article-category">Ａｒｔ</span>
+                <h3 class="article-title">グリッチアートの美学</h3>
+                <span class="article-date">2024.12.12</span>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image">
+                    <span class="article-number">003</span>
+                </div>
+                <span class="article-category">Ｔｅｃｈ</span>
+                <h3 class="article-title">レトロPCの魅力</h3>
+                <span class="article-date">2024.12.10</span>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image">
+                    <span class="article-number">004</span>
+                </div>
+                <span class="article-category">Ｆａｓｈｉｏｎ</span>
+                <h3 class="article-title">ネオン×ストリート</h3>
+                <span class="article-date">2024.12.08</span>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image">
+                    <span class="article-number">005</span>
+                </div>
+                <span class="article-category">Ｇａｍｅ</span>
+                <h3 class="article-title">アーケードの記憶</h3>
+                <span class="article-date">2024.12.05</span>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image">
+                    <span class="article-number">006</span>
+                </div>
+                <span class="article-category">Ｄｅｓｉｇｎ</span>
+                <h3 class="article-title">80年代タイポグラフィ</h3>
+                <span class="article-date">2024.12.02</span>
+            </article>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <h2 class="newsletter-title">ＳＵＢＳＣＲＩＢＥ</h2>
+        <p class="newsletter-text">電子の波に乗って、最新情報をお届け。</p>
+        <form class="newsletter-form">
+            <input type="email" class="newsletter-input" placeholder="your@email.com">
+            <button type="submit" class="newsletter-btn">ＪＯＩＮ</button>
+        </form>
+    </section>
+
+    <footer>
+        <div class="footer-logo">ＤＲＥＡＭ ＷＡＶＥ</div>
+        <div class="footer-links">
+            <a href="#">Ｔｗｉｔｔｅｒ</a>
+            <a href="#">Ｉｎｓｔａｇｒａｍ</a>
+            <a href="#">ＲＳＳ</a>
+        </div>
+        <p class="footer-copy">© 2024 ＤＲＥＡＭ ＷＡＶＥ</p>
+    </footer>
+</body>
+</html>

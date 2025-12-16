@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>★ CyberPop2K ★</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Audiowide&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --chrome: linear-gradient(135deg, #e8e8e8 0%, #ffffff 25%, #c0c0c0 50%, #ffffff 75%, #a8a8a8 100%);
+            --holographic: linear-gradient(135deg, #ff6b9d, #c44dff, #6b9dff, #4dffc4, #ffd84d, #ff6b9d);
+            --silver: #c0c0c0;
+            --hot-pink: #ff1493;
+            --electric-blue: #00bfff;
+            --lime: #32cd32;
+            --purple: #9400d3;
+            --bg: #1a1a2e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Chakra Petch', sans-serif;
+            background: var(--bg);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(255, 20, 147, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(0, 191, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(148, 0, 211, 0.1) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 1rem 2rem;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, transparent 100%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--holographic);
+            background-size: 400% 400%;
+            animation: hologram 3s ease infinite;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        @keyframes hologram {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .logo-text {
+            font-family: 'Audiowide', cursive;
+            font-size: 1.2rem;
+            background: var(--chrome);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+        }
+
+        nav {
+            display: flex;
+            gap: 0;
+        }
+
+        nav a {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.25rem;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            margin-left: -10px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        nav a:first-child {
+            margin-left: 0;
+        }
+
+        nav a:hover {
+            background: var(--hot-pink);
+            border-color: var(--hot-pink);
+            box-shadow: 0 0 20px var(--hot-pink);
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            z-index: 1;
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: var(--holographic);
+            background-size: 400% 400%;
+            animation: hologram 3s ease infinite;
+            color: var(--bg);
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .hero-title {
+            font-family: 'Audiowide', cursive;
+            font-size: clamp(3rem, 10vw, 6rem);
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            text-shadow:
+                0 0 10px var(--hot-pink),
+                0 0 20px var(--hot-pink),
+                0 0 40px var(--purple);
+        }
+
+        .hero-title .chrome {
+            background: var(--chrome);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.5));
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--silver);
+            max-width: 500px;
+            margin-bottom: 3rem;
+        }
+
+        .hero-btn {
+            font-family: 'Audiowide', cursive;
+            font-size: 0.9rem;
+            padding: 1rem 3rem;
+            background: var(--chrome);
+            border: 3px solid white;
+            color: var(--bg);
+            cursor: pointer;
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow:
+                0 5px 20px rgba(255, 255, 255, 0.2),
+                inset 0 -3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-btn:hover {
+            transform: scale(1.05);
+            box-shadow:
+                0 0 30px var(--hot-pink),
+                0 5px 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .hero-decoration {
+            position: absolute;
+            font-size: 8rem;
+            opacity: 0.1;
+            animation: spin 20s linear infinite;
+        }
+
+        .hero-decoration.left {
+            left: 5%;
+            top: 20%;
+        }
+
+        .hero-decoration.right {
+            right: 5%;
+            bottom: 20%;
+            animation-direction: reverse;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Featured */
+        .featured {
+            position: relative;
+            z-index: 1;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            font-family: 'Audiowide', cursive;
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--holographic);
+            background-size: 400% 400%;
+            animation: hologram 3s ease infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .featured-card {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            position: relative;
+        }
+
+        .featured-card::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: var(--holographic);
+            background-size: 400% 400%;
+            animation: hologram 3s ease infinite;
+            border-radius: 32px;
+            z-index: -1;
+            opacity: 0.5;
+            filter: blur(10px);
+        }
+
+        .featured-image {
+            aspect-ratio: 1;
+            background: var(--holographic);
+            background-size: 400% 400%;
+            animation: hologram 5s ease infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+        }
+
+        .featured-content {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-category {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            background: var(--hot-pink);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            width: fit-content;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .featured-title {
+            font-family: 'Audiowide', cursive;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .featured-excerpt {
+            font-size: 0.95rem;
+            color: var(--silver);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--electric-blue);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: var(--hot-pink);
+            gap: 1rem;
+        }
+
+        /* Articles */
+        .articles {
+            position: relative;
+            z-index: 1;
+            padding: 4rem 2rem;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .article-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .article-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--hot-pink);
+            box-shadow: 0 20px 50px rgba(255, 20, 147, 0.2);
+        }
+
+        .article-image {
+            aspect-ratio: 16/10;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .article-card:nth-child(1) .article-image { background: linear-gradient(135deg, #ff1493, #ff6b9d); }
+        .article-card:nth-child(2) .article-image { background: linear-gradient(135deg, #00bfff, #6b9dff); }
+        .article-card:nth-child(3) .article-image { background: linear-gradient(135deg, #9400d3, #c44dff); }
+        .article-card:nth-child(4) .article-image { background: linear-gradient(135deg, #32cd32, #4dffc4); }
+        .article-card:nth-child(5) .article-image { background: linear-gradient(135deg, #ffd84d, #ff6b9d); }
+        .article-card:nth-child(6) .article-image { background: linear-gradient(135deg, #c44dff, #00bfff); }
+
+        .article-content {
+            padding: 1.5rem;
+        }
+
+        .article-category {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--hot-pink);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+        }
+
+        .article-title {
+            font-family: 'Audiowide', cursive;
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .article-date {
+            font-size: 0.75rem;
+            color: var(--silver);
+        }
+
+        /* Newsletter */
+        .newsletter {
+            position: relative;
+            z-index: 1;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .newsletter-card {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 3rem;
+            background: var(--chrome);
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter-card::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, transparent 100%);
+            border-radius: 25px 25px 50% 50%;
+            pointer-events: none;
+        }
+
+        .newsletter-title {
+            font-family: 'Audiowide', cursive;
+            font-size: 1.5rem;
+            color: var(--bg);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .newsletter-text {
+            font-size: 0.9rem;
+            color: #333;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.5rem;
+            position: relative;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            font-family: inherit;
+            font-size: 0.9rem;
+            border: 2px solid var(--bg);
+            border-radius: 25px;
+            background: white;
+            outline: none;
+        }
+
+        .newsletter-btn {
+            padding: 1rem 2rem;
+            font-family: 'Audiowide', cursive;
+            font-size: 0.75rem;
+            background: var(--hot-pink);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            background: var(--purple);
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 1;
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-logo {
+            font-family: 'Audiowide', cursive;
+            font-size: 1rem;
+            background: var(--chrome);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            font-size: 0.75rem;
+            color: var(--silver);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--hot-pink);
+        }
+
+        .footer-copy {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .featured-card {
+                grid-template-columns: 1fr;
+            }
+            .articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <header>
+        <div class="logo">
+            <div class="logo-icon">✦</div>
+            <span class="logo-text">CyberPop2K</span>
+        </div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Tech</a>
+            <a href="#">Style</a>
+            <a href="#">Music</a>
+            <a href="#">Games</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-decoration left">✦</div>
+        <div class="hero-decoration right">✧</div>
+        <span class="hero-badge">★ Welcome to the Future ★</span>
+        <h1 class="hero-title">
+            <span class="chrome">CYBER</span>POP<br>2000
+        </h1>
+        <p class="hero-subtitle">
+            ミレニアムの夢、メタリックな未来。<br>
+            Y2Kカルチャーを再発見するデジタルマガジン。
+        </p>
+        <button class="hero-btn">★ ENTER ★</button>
+    </section>
+
+    <section class="featured">
+        <h2 class="section-title">★ FEATURED ★</h2>
+        <article class="featured-card">
+            <div class="featured-image">💿</div>
+            <div class="featured-content">
+                <span class="featured-category">Retro Future</span>
+                <h3 class="featured-title">Y2Kデザインの復活：<br>なぜ今、2000年代が輝くのか</h3>
+                <p class="featured-excerpt">
+                    バブルフォント、メタリックカラー、ホログラフィック。
+                    20年前の「未来」が、なぜ今のGen-Zを魅了するのか。
+                    ノスタルジアとイノベーションの交差点を探る。
+                </p>
+                <a href="#" class="read-more">Read More →</a>
+            </div>
+        </article>
+    </section>
+
+    <section class="articles">
+        <h2 class="section-title">★ LATEST ★</h2>
+        <div class="articles-grid">
+            <article class="article-card">
+                <div class="article-image">📱</div>
+                <div class="article-content">
+                    <span class="article-category">Tech</span>
+                    <h3 class="article-title">iMac G3が変えたもの</h3>
+                    <span class="article-date">2024.12.14</span>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image">👗</div>
+                <div class="article-content">
+                    <span class="article-category">Fashion</span>
+                    <h3 class="article-title">バタフライクリップの帰還</h3>
+                    <span class="article-date">2024.12.12</span>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image">🎵</div>
+                <div class="article-content">
+                    <span class="article-category">Music</span>
+                    <h3 class="article-title">Hyperpopの系譜</h3>
+                    <span class="article-date">2024.12.10</span>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image">🎮</div>
+                <div class="article-content">
+                    <span class="article-category">Games</span>
+                    <h3 class="article-title">Dreamcastの遺産</h3>
+                    <span class="article-date">2024.12.08</span>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image">💄</div>
+                <div class="article-content">
+                    <span class="article-category">Beauty</span>
+                    <h3 class="article-title">フロスティリップの復活</h3>
+                    <span class="article-date">2024.12.05</span>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image">🌐</div>
+                <div class="article-content">
+                    <span class="article-category">Web</span>
+                    <h3 class="article-title">GeoCitiesの美学</h3>
+                    <span class="article-date">2024.12.02</span>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <div class="newsletter-card">
+            <h2 class="newsletter-title">★ JOIN THE FUTURE ★</h2>
+            <p class="newsletter-text">最新のレトロフューチャーニュースをゲット！</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="your@email.com">
+                <button type="submit" class="newsletter-btn">GO!</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">★ CyberPop2K ★</div>
+        <div class="footer-links">
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+            <a href="#">Instagram</a>
+        </div>
+        <p class="footer-copy">© 2024 CyberPop2K - Made with ★</p>
+    </footer>
+</body>
+</html>
